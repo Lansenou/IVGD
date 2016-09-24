@@ -32,7 +32,7 @@ public class OnTap : MonoBehaviour
         if (Input.touchCount > 0 && Input.GetTouch(0).tapCount > 0 || Input.GetKeyDown(KeyCode.Space))
         {
             // Check if tap was on UI or without a release
-            return !FallManager.DidFall && !eventSystem.IsPointerOverGameObject() && tapReleased;
+            return !FallManager.DidFall && !eventSystem.IsPointerOverGameObject() && tapReleased && PauseMenu.CurrentStatus == PauseMenu.Status.Inactive;
         }
         return false;
     }
