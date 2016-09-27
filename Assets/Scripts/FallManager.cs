@@ -9,6 +9,11 @@ public class FallManager : MonoBehaviour
     private bool hasFallen;
     [SerializeField] private GameObject target;
 
+    private void Awake()
+    {
+        DidFall = false;
+    }
+
     private void Start()
     {
         DidFall = false;

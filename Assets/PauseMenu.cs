@@ -88,7 +88,7 @@ public class PauseMenu : MonoBehaviour {
     }
 
 	// Use this for initialization
-	void Start () {
+	private void Start () {
         graphics = GetComponentsInChildren<Image>();
         text = GetComponentsInChildren<Text>();
 
@@ -99,6 +99,7 @@ public class PauseMenu : MonoBehaviour {
             Hide();
             gameObject.SetActive(false);
             CurrentStatus = Status.Inactive;
+            Time.timeScale = 1;
         }
 
         initialized = true;

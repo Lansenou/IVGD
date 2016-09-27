@@ -25,14 +25,14 @@ public class OnTap : MonoBehaviour
         {
             tapReleased = true;
         }
-	}
+    }
 
     private bool Tapped()
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).tapCount > 0 || Input.GetKeyDown(KeyCode.Space))
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began || Input.GetKeyDown(KeyCode.Space))
         {
             // Check if tap was on UI or without a release
-            return !FallManager.DidFall && !eventSystem.IsPointerOverGameObject() && tapReleased && PauseMenu.CurrentStatus == PauseMenu.Status.Inactive;
+            return !FallManager.DidFall && !eventSystem.IsPointerOverGameObject(0) && tapReleased && PauseMenu.CurrentStatus == PauseMenu.Status.Inactive;
         }
         return false;
     }
