@@ -18,6 +18,8 @@ public class FallManager : MonoBehaviour
     private void Start()
     {
         DidFall = false;
+        Time.timeScale = 1;
+        PauseMenu.CurrentStatus = PauseMenu.Status.Inactive;
     }
 
     // Update is called once per frame
