@@ -48,7 +48,12 @@ public class Movement : MonoBehaviour
     private IEnumerator Move()
     {
         while (!FallManager.DidFall)
-        {          
+        {
+            while (PauseMenu.CurrentStatus != PauseMenu.Status.Inactive)
+            {
+                yield return null;
+            }
+
             targetPosition = currentCycle.TargetPos + new Vector3(0, transform.position.y);
             startPosition = transform.position;
             float currentTime = 0;
@@ -56,11 +61,17 @@ public class Movement : MonoBehaviour
             // Loop towards new position
             while (currentTime < 1 && !FallManager.DidFall)
             {
+                while (PauseMenu.CurrentStatus != PauseMenu.Status.Inactive)
+                {
+                    yield return null;
+                }
                 currentTime += Time.deltaTime/ currentCycle.MovementTime;
                 transform.position = Vector3.Lerp(startPosition, targetPosition, currentTime);
                 yield return null;
             }
+
             currentCycle = Pattern.GetNextCycle(currentCycle);
+
             yield return null;
         }
     }

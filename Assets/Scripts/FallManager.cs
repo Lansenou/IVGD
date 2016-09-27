@@ -10,8 +10,6 @@ public class FallManager : MonoBehaviour
     private bool hasFallen;
     [SerializeField] private GameObject target;
 
-    public SmoothFollow SmoothFollow;
-
     private void Start()
     {
         DidFall = false;
