@@ -20,42 +20,85 @@ namespace UnityStandardAssets.Utility
 		[SerializeField]
 		private float heightDamping;
 
-		// Use this for initialization
-		void Start() { }
+        [SerializeField]
+        private Camera camera;
+        [SerializeField]
+        private Transform startBlock;
+        [HideInInspector]
+        private float defaultFieldOfView;
+        [HideInInspector]
+        private Rigidbody lastBlock;
+        [HideInInspector]
+        private Transform camTarget;
+        [HideInInspector]
+        private bool camFollowBlock;
 
-		// Update is called once per frame
-		void LateUpdate()
-		{
-			// Early out if we don't have a target
-			if (!target)
-				return;
+	    [HideInInspector] private Vector3 startPosition;
 
-			// Calculate the current rotation angles
-			var wantedRotationAngle = target.eulerAngles.y;
-			var wantedHeight = target.position.y + height;
+        // Use this for initialization
+	    void Start()
+	    {
+	        startPosition = startBlock.position;
+	        defaultFieldOfView = camera.fieldOfView;
+	    }
 
-			var currentRotationAngle = transform.eulerAngles.y;
-			var currentHeight = transform.position.y;
+        // Update is called once per frame
+        void LateUpdate()
+        {
 
-			// Damp the rotation around the y-axis
-			currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
+            // Check if tower is falling
+            if (Input.GetKey(KeyCode.A) || camFollowBlock) //todo change this to an event when detected that the tower is falling.
+            {
+                camera.fieldOfView = defaultFieldOfView + Vector3.Distance(lastBlock.transform.position, startPosition);
+                camTarget = lastBlock.transform;
 
-			// Damp the height
-			currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
+            }
+            else
+            {
+                camTarget = target;
+            }
 
-			// Convert the angle into a rotation
-			var currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
+            // Early out if we don't have a target
+            if (!camTarget)
+                return;
 
-			// Set the position of the camera on the x-z plane to:
-			// distance meters behind the target
-			transform.position = target.position;
-			transform.position -= currentRotation * Vector3.forward * distance;
+            // Calculate the current rotation angles
+            var wantedRotationAngle = camTarget.eulerAngles.y;
+            var wantedHeight = camTarget.position.y + height;
 
-			// Set the height of the camera
-			transform.position = new Vector3(transform.position.x ,currentHeight , transform.position.z);
+            var currentRotationAngle = transform.eulerAngles.y;
+            var currentHeight = transform.position.y;
 
-			// Always look at the target
-			transform.LookAt(target);
-		}
+            // Damp the rotation around the y-axis
+            currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
+
+            // Damp the height
+            currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
+
+            // Convert the angle into a rotation
+            var currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
+
+            // Set the position of the camera on the x-z plane to:
+            // distance meters behind the target
+            transform.position = camTarget.position;
+            transform.position -= currentRotation * Vector3.forward * distance;
+
+            // Set the height of the camera
+            transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
+
+            // Always look at the target
+            transform.LookAt(camTarget);
+        }
+
+        public void NewLastBlock(Rigidbody newBlock)
+        {
+            lastBlock = newBlock;
+        }
+
+	    public void setGameOverCam()
+	    {
+	        camFollowBlock = true;
+	    }
+
 	}
 }

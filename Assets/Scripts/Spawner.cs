@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityStandardAssets.Utility;
 
 public class Spawner : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class Spawner : MonoBehaviour
     private Rigidbody nextBlock;
     private float nextBlockY = 0;
     private int blockCounter = 0;
+
+    public SmoothFollow smoothFollow;
+
 
     public void Spawn()
     {
@@ -21,10 +25,12 @@ public class Spawner : MonoBehaviour
             nextBlock.isKinematic = false;
             nextBlock.name = "Block " + blockCounter++;
         }
-
+        //Set last spawned block for camera follow script
+        smoothFollow.NewLastBlock(nextBlock);
         //Get new block
         nextBlock = getBlock();
         nextBlockY = transform.position.y + 1;
+
     }
 
     private void Start()

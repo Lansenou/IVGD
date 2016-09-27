@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityStandardAssets.Utility;
 
 public class FallManager : MonoBehaviour
 {
@@ -8,11 +9,6 @@ public class FallManager : MonoBehaviour
 
     private bool hasFallen;
     [SerializeField] private GameObject target;
-
-    private void Awake()
-    {
-        DidFall = false;
-    }
 
     private void Start()
     {
@@ -25,6 +21,7 @@ public class FallManager : MonoBehaviour
         if (hasFallen != DidFall)
         {
             StartCoroutine(EnableTarget(hasFallen = DidFall));
+            SmoothFollow.setGameOverCam();
         }
     }
 
