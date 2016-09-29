@@ -28,12 +28,13 @@ public class FallManager : MonoBehaviour
         if (hasFallen != DidFall)
         {
             StartCoroutine(EnableTarget(hasFallen = DidFall));
-            cameraFollow.setGameOverCam();
+            cameraFollow.SetGameOverCam();
         }
     }
 
     private IEnumerator EnableTarget(bool active) {
         yield return new WaitForSeconds(WaitForSeconds);
+        FindObjectOfType <BuildingTracker> ().ShowSummary ();
         target.SetActive(active);
     }
 }

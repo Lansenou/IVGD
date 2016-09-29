@@ -95,7 +95,7 @@ namespace UnityStandardAssets.Utility
             lastBlock = newBlock;
         }
 
-	    public void setGameOverCam()
+	    public void SetGameOverCam()
 	    {
 	        camFollowBlock = true;
 	    }
