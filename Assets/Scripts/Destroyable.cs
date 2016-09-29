@@ -2,14 +2,105 @@
 
 public class Destroyable : MonoBehaviour
 {
-    public int Score;
+    public int score;
+
+    public string buildingName;
+
+    [SerializeField]
+    BuildingTracker buildingTracker;
+     
+    [HideInInspector]
+    public Building BuildingType;
+
+    [HideInInspector]
+    public Shop ShopType;
+
+    [HideInInspector]
+    public Car CarType;
+
+    public ObjectSort SortObject;
+    private bool isDestroyed = false;
+
+    public enum ObjectSort
+    {
+        Shop,
+        Residence,
+        Vehicle
+    }
+
+    public enum Shop
+    {
+        CoffeeShop,
+        BookShop,
+        ChickenShop,
+        ClothingShop,
+        DrugsStore,
+        FastFoodShop,
+        FruitShop,
+        GiftShop,
+        PizzaShop,
+        MusicStore,
+        Bakery,
+        GasStation,
+        CarService,
+        Bar,
+        SuperMarket
+    }
+    public enum Building
+    {
+        None,
+        House,
+        Flat,
+        SkyTower,
+        Stadium,
+        Factory       
+    }
+    public enum Car
+    {
+        None,
+        Ambulance,
+        Bus,
+        Car,
+        Container,
+        PickupTruck,
+        PoliceCar,
+        Suv,
+        Taxi,
+        Truck
+    }
+
+    void Start()
+    {
+        if (SortObject == ObjectSort.Residence)
+        {
+            this.buildingName = BuildingType.ToString ();
+        } else if (SortObject == ObjectSort.Shop)
+        {
+            this.buildingName = ShopType.ToString ();
+        } else if (SortObject == ObjectSort.Vehicle)
+        {
+            this.buildingName = CarType.ToString ();
+        }
+    }
+
 
     private void OnCollisionEnter(Collision coll)
     {
-        if (coll.collider.CompareTag("towerBlock"))
+        if (!isDestroyed)
         {
-            HighScore.CurrentScore += Score;
-            Destroy(gameObject);
+            if (coll.collider.CompareTag ("towerBlock"))
+            {
+                HighScore.CurrentScore += score;
+                TrackBuilding ();
+                isDestroyed = true;
+            }
         }
+    }
+
+    void TrackBuilding()
+    {
+        buildingTracker.AddBuilding (this);
+        Destroy(gameObject);
+       // Debug.Log ("added building " + buildingName);
     }
 }
