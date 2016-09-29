@@ -23,7 +23,7 @@ public class Movement : MonoBehaviour
     private void Start()
     {
         // 1 Higher than the base
-        transform.position = basePosition = Base.position + Vector3.up;
+        transform.position = basePosition = Base.position + Vector3.up * 3f;
         // Base position is the middle of the pattern, from which the block moves.
         basePosition.y = 0;
 

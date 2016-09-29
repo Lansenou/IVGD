@@ -32,10 +32,12 @@ public class BuildingTracker : MonoBehaviour {
             buildings [building.name] = new List<Building>();  
         }
         buildings [building.name].Add (building);
+        ShowSummary ();
     }
 
     public void ShowSummary()
     {
+        summary.text = "Summary";
         foreach (KeyValuePair<string, List<Building>> kvp in buildings)
         {
             int score = 0;
@@ -44,7 +46,7 @@ public class BuildingTracker : MonoBehaviour {
                 score += building.score;
             }
             //Debug.Log("Name: " + kvp.Key + " Score:" + score + " Count: " + kvp.Value.Count);
-            summary.text = summary.text + "\n" + "Name: " + kvp.Key + " Score:" + score + " Count: " + kvp.Value.Count;
+            summary.text += "\n" + kvp.Key + " Score:" + score + " Count: " + kvp.Value.Count;
         }
 
     }

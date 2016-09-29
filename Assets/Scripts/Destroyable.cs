@@ -44,7 +44,8 @@ public class Destroyable : MonoBehaviour
         GasStation,
         CarService,
         Bar,
-        SuperMarket
+        SuperMarket,
+        Restaurant
     }
     public enum Building
     {

@@ -38,7 +38,7 @@ public class Spawner : MonoBehaviour
         
         //Get new block
         nextBlock = getBlock();
-        nextBlockY = transform.position.y + 1;
+        nextBlockY = transform.position.y + 3;
 
     }
 
