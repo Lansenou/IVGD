@@ -28,7 +28,7 @@ public class FallManager : MonoBehaviour
         if (hasFallen != DidFall)
         {
             StartCoroutine(EnableTarget(hasFallen = DidFall));
-            cameraFollow.setGameOverCam();
+            cameraFollow.SetGameOverCam();
         }
     }
 

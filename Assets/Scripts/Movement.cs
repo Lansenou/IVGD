@@ -9,14 +9,24 @@ public class Movement : MonoBehaviour
     public AudioClip PlacementSound;
     public Pattern Pattern;
 
+    public Transform Base;
+    private Vector3 basePosition;
+
     private Cycle currentCycle;
     private AudioSource source;
     private Vector3 startPosition;
     private Vector3 targetPosition;
 
+
+
     // Use this for initialization
     private void Start()
     {
+        // 1 Higher than the base
+        transform.position = basePosition = Base.position + Vector3.up;
+        // Base position is the middle of the pattern, from which the block moves.
+        basePosition.y = 0;
+
         source = GetComponent<AudioSource>();
         currentCycle = Pattern.GetCycleInfo(Cycle.Direction.ForwardX);
         StartCoroutine(Move());
@@ -54,8 +64,12 @@ public class Movement : MonoBehaviour
                 yield return null;
             }
 
-            targetPosition = currentCycle.TargetPos + new Vector3(0, transform.position.y);
             startPosition = transform.position;
+            // Base position + the next target
+            targetPosition = basePosition + currentCycle.TargetPos;
+            // Add currentHeight to the targetPosition;
+            targetPosition += new Vector3(0, transform.position.y);
+
             float currentTime = 0;
             
             // Loop towards new position
