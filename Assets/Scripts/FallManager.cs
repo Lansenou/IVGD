@@ -5,16 +5,21 @@ using UnityStandardAssets.Utility;
 public class FallManager : MonoBehaviour
 {
     public static bool DidFall;
-    public int WaitForSeconds = 5;
+
+    [SerializeField]
+    private int WaitForSeconds = 5;
+    [SerializeField]
+    private GameObject target;
+    [SerializeField]
+    private SmoothFollow cameraFollow;
 
     private bool hasFallen;
-    [SerializeField] private GameObject target;
-
-    public SmoothFollow SmoothFollow;
 
     private void Start()
     {
         DidFall = false;
+        Time.timeScale = 1;
+        PauseMenu.CurrentStatus = PauseMenu.Status.Inactive;
     }
 
     // Update is called once per frame
@@ -23,12 +28,13 @@ public class FallManager : MonoBehaviour
         if (hasFallen != DidFall)
         {
             StartCoroutine(EnableTarget(hasFallen = DidFall));
-            SmoothFollow.setGameOverCam();
+            cameraFollow.SetGameOverCam();
         }
     }
 
     private IEnumerator EnableTarget(bool active) {
         yield return new WaitForSeconds(WaitForSeconds);
+        FindObjectOfType <BuildingTracker> ().ShowSummary ();
         target.SetActive(active);
     }
 }

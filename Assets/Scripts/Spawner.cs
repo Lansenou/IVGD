@@ -6,13 +6,15 @@ using UnityStandardAssets.Utility;
 public class Spawner : MonoBehaviour
 {
     public SpawnInfo Info;
+    public SmoothFollow SmoothFollow;
 
+    private Score score;
     private float currentTime = 0;
     private Rigidbody nextBlock;
     private float nextBlockY = 0;
     private int blockCounter = 0;
 
-    public SmoothFollow smoothFollow;
+
 
 
     public void Spawn()
@@ -26,15 +28,23 @@ public class Spawner : MonoBehaviour
             nextBlock.name = "Block " + blockCounter++;
         }
         //Set last spawned block for camera follow script
-        smoothFollow.NewLastBlock(nextBlock);
+        SmoothFollow.NewLastBlock(nextBlock);
+
+        // Score points
+        if (score)
+        {
+            score.AddPoints(nextBlock.transform);
+        }
+        
         //Get new block
         nextBlock = getBlock();
-        nextBlockY = transform.position.y + 1;
+        nextBlockY = transform.position.y + 3;
 
     }
 
     private void Start()
     {
+        score = FindObjectOfType<Score>();
         nextBlockY = transform.position.y;
         nextBlock = getBlock();
     }

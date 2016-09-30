@@ -21,7 +21,7 @@ namespace UnityStandardAssets.Utility
 		private float heightDamping;
 
         [SerializeField]
-        private Camera camera;
+        private Camera targetCamera;
         [SerializeField]
         private Transform startBlock;
         [HideInInspector]
@@ -39,7 +39,7 @@ namespace UnityStandardAssets.Utility
 	    void Start()
 	    {
 	        startPosition = startBlock.position;
-	        defaultFieldOfView = camera.fieldOfView;
+	        defaultFieldOfView = targetCamera.fieldOfView;
 	    }
 
         // Update is called once per frame
@@ -49,7 +49,7 @@ namespace UnityStandardAssets.Utility
             // Check if tower is falling
             if (Input.GetKey(KeyCode.A) || camFollowBlock) //todo change this to an event when detected that the tower is falling.
             {
-                camera.fieldOfView = defaultFieldOfView + Vector3.Distance(lastBlock.transform.position, startPosition);
+                targetCamera.fieldOfView = defaultFieldOfView + Vector3.Distance(lastBlock.transform.position, startPosition);
                 camTarget = lastBlock.transform;
 
             }
@@ -95,7 +95,7 @@ namespace UnityStandardAssets.Utility
             lastBlock = newBlock;
         }
 
-	    public void setGameOverCam()
+	    public void SetGameOverCam()
 	    {
 	        camFollowBlock = true;
 	    }
