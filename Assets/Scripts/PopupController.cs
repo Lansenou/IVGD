@@ -9,13 +9,18 @@ public class PopupController : MonoBehaviour
 
     public static void Initialize()
     {
-        canvas = GameObject.Find("canvas");
-        if (!popupText)
+        if (!canvas)
+        {
+            canvas = GameObject.Find("Canvas");
+        }
+        if (!popupText) { 
             popupText = Resources.Load<FloatingPopupText>("Prefabs/PopupTextParent");
+        }
     }
 
-    public static void CreateFloatingText(string text)
-    {
+public static void CreateFloatingText(string text)
+{
+        Initialize();
         FloatingPopupText instance = Instantiate(popupText);
         instance.transform.SetParent(canvas.transform, false);
         instance.setText(text);

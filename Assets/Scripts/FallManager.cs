@@ -12,6 +12,10 @@ public class FallManager : MonoBehaviour
     private GameObject target;
     [SerializeField]
     private SmoothFollow cameraFollow;
+    [SerializeField]
+    private RectTransform scoreText;
+    [SerializeField]
+    private RectTransform highscoreText;
 
     private bool hasFallen;
 
@@ -32,8 +36,12 @@ public class FallManager : MonoBehaviour
         }
     }
 
-    private IEnumerator EnableTarget(bool active) {
+    private IEnumerator EnableTarget(bool active)
+    {
         yield return new WaitForSeconds(WaitForSeconds);
         target.SetActive(active);
+        //set score gui in the right place for gameover screen.
+        scoreText.localPosition = new Vector3(0f, -420, 0f);
+        highscoreText.localPosition = new Vector3(0f, -500, 0f);
     }
 }
