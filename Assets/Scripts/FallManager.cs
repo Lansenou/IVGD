@@ -32,13 +32,14 @@ public class FallManager : MonoBehaviour
         if (hasFallen != DidFall)
         {
             StartCoroutine(EnableTarget(hasFallen = DidFall));
-            cameraFollow.setGameOverCam();
+            cameraFollow.SetGameOverCam();
         }
     }
 
     private IEnumerator EnableTarget(bool active)
     {
         yield return new WaitForSeconds(WaitForSeconds);
+        FindObjectOfType <BuildingTracker> ().ShowSummary ();
         target.SetActive(active);
         //set score gui in the right place for gameover screen.
         scoreText.localPosition = new Vector3(0f, -420, 0f);
