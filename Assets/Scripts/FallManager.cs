@@ -12,10 +12,6 @@ public class FallManager : MonoBehaviour
     private GameObject target;
     [SerializeField]
     private SmoothFollow cameraFollow;
-    [SerializeField]
-    private RectTransform scoreText;
-    [SerializeField]
-    private RectTransform highscoreText;
 
     private bool hasFallen;
 
@@ -41,8 +37,5 @@ public class FallManager : MonoBehaviour
         yield return new WaitForSeconds(WaitForSeconds);
         FindObjectOfType <BuildingTracker> ().ShowSummary ();
         target.SetActive(active);
-        //set score gui in the right place for gameover screen.
-        scoreText.localPosition = new Vector3(0f, -420, 0f);
-        highscoreText.localPosition = new Vector3(0f, -500, 0f);
     }
 }

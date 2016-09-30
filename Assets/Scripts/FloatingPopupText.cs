@@ -16,4 +16,9 @@ public class FloatingPopupText : MonoBehaviour {
     {
         animator.GetComponentInChildren<Text>().text = String;
     }
+
+    public void setColor(Color color)
+    {
+        animator.GetComponentInChildren<Text>().color = color;
+    }
 }

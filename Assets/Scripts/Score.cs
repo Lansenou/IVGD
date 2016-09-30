@@ -15,6 +15,11 @@ public class Score : MonoBehaviour
     private float placementScore = 1;
     private List<Transform> averageList = new List<Transform>();
 
+    private static Color blue = Color.cyan;
+    private static Color green = Color.green;
+    private static Color yellow = Color.yellow;
+    private static Color red = Color.red;
+
     public enum Block {
         Perfect,
         Good,
@@ -94,15 +99,19 @@ public class Score : MonoBehaviour
             {
                 case Block.Perfect:
                     multiplier += Perfect;
+                    PopupController.CreateFloatingText("Perfect", blue);
                     break;
                 case Block.Good:
                     multiplier += Good;
+                    PopupController.CreateFloatingText("Good", green);
                     break;
                 case Block.Ok:
                     multiplier += Ok;
+                    PopupController.CreateFloatingText("Ok", yellow);
                     break;
                 case Block.Bad:
                     multiplier = 1;
+                    PopupController.CreateFloatingText("Bad", red);
                     break;
                 default:
                     multiplier = 1;
