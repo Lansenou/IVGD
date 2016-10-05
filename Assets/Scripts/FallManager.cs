@@ -35,7 +35,7 @@ public class FallManager : MonoBehaviour
     private IEnumerator EnableTarget(bool active)
     {
         yield return new WaitForSeconds(WaitForSeconds);
-        FindObjectOfType <BuildingTracker> ().ShowSummary ();
         target.SetActive(active);
+        FindObjectOfType <BuildingTracker> ().ShowSummary ();
     }
 }
