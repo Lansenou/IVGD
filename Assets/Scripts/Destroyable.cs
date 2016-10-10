@@ -18,6 +18,9 @@ public class Destroyable : MonoBehaviour
     [HideInInspector]
     public Car CarType;
 
+    [HideInInspector]
+    private static GameObject explosionPrefab;
+
     public ObjectSort SortObject;
     private bool isDestroyed = false;
 
@@ -94,6 +97,7 @@ public class Destroyable : MonoBehaviour
                 HighScore.CurrentScore += score;
                 TrackBuilding ();
                 isDestroyed = true;
+                createExplosion();
             }
         }
     }
@@ -103,5 +107,16 @@ public class Destroyable : MonoBehaviour
         buildingTracker.AddBuilding (this);
         Destroy(gameObject);
        // Debug.Log ("added building " + buildingName);
+    }
+
+    private void createExplosion()
+    {
+        if (!explosionPrefab)
+        {
+            explosionPrefab = Resources.Load("Prefabs/explosion") as GameObject;
+        }
+        GameObject explosion = Instantiate(explosionPrefab);
+        explosion.transform.position = transform.position;
+        explosion.transform.SetParent(transform.parent);
     }
 }
