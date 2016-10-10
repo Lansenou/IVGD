@@ -106,7 +106,6 @@ public class Destroyable : MonoBehaviour
     {
         buildingTracker.AddBuilding (this);
         Destroy(gameObject);
-       // Debug.Log ("added building " + buildingName);
     }
 
     private void createExplosion()

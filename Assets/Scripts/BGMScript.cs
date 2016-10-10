@@ -3,20 +3,22 @@ using System.Collections;
 
 public class BGMScript : MonoBehaviour
 {
-
     public AudioSource audioSource;
-    public static GameObject bgmGameObject;
+
+    private static BGMScript instance;
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-        if (bgmGameObject)
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            audioSource.Play();
+        }
+        else
         {
             Destroy(gameObject);
-            return;
         }
-        audioSource.Play();
-        bgmGameObject = gameObject;
     }
 	
 	// Update is called once per frame
