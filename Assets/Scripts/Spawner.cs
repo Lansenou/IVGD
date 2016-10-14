@@ -14,9 +14,6 @@ public class Spawner : MonoBehaviour
     private float nextBlockY = 0;
     private int blockCounter = 0;
 
-
-
-
     public void Spawn()
     {
         currentTime = (currentTime + Time.deltaTime) * Info.Color.ColorSpeed % 1;
@@ -40,8 +37,13 @@ public class Spawner : MonoBehaviour
         //Get new block
         nextBlock = getBlock();
         nextBlockY = transform.position.y + 3;
-
     }
+
+    public int GetBlockCount()
+    {
+        return blockCounter;
+    }
+
 
     private void Start()
     {

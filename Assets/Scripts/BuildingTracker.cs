@@ -1,25 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 
 public class BuildingTracker : MonoBehaviour {
 
     [SerializeField]
-    private Text summary;
-
-    public class Building {
-        public string name;
-        public int score;
-        public Building(Destroyable destroyable) {
-            this.name = destroyable.buildingName;
-            this.score = destroyable.score;
-        }
-    }
-
-   // private Dictionary<string, int> buildings = new Dictionary<string, int>();
-	// Use this for initialization
+    private Transform summaryParent;
+    [SerializeField]
+    private Spawner spawner;
+    [SerializeField]
+    private UI.BuildingInfo summaryPrefab;
     private Dictionary<string, List<Building>> buildings = new Dictionary<string, List<Building>>();
+    private List<UI.BuildingInfo> info = new List<UI.BuildingInfo>();
 
     public void AddBuilding(Destroyable destroyable)
     {
@@ -31,25 +22,66 @@ public class BuildingTracker : MonoBehaviour {
         {
             buildings [building.name] = new List<Building>();  
         }
-        buildings [building.name].Add (building);
-        ShowSummary ();
+
+        AddToInfo(building);
     }
 
-    public void ShowSummary()
+    public void AddStackScore()
     {
-        summary.text = "Summary";
-        foreach (KeyValuePair<string, List<Building>> kvp in buildings)
+        UI.BuildingInfo newBuilding = Instantiate(summaryPrefab);
+        newBuilding.transform.SetParent(summaryParent, false);
+        newBuilding.transform.SetAsFirstSibling();
+
+        newBuilding.nameText.text = "Tower";
+        newBuilding.amountText.text = spawner.GetBlockCount().ToString();
+        newBuilding.scoreText.text = HighScore.CurrentScore.ToString("0");
+        info.Add(newBuilding);
+    }
+
+    private void AddToInfo(Building building)
+    {
+        buildings[building.name].Add(building);
+
+        // If already exists add score to current info
+        for (int i = 0; i < info.Count; i++)
         {
-            int score = 0;
-            foreach(Building building in kvp.Value)
+            if (info[i].nameText.text == building.name)
             {
-                score += building.score;
+                info[i].amountText.text = buildings[building.name].Count.ToString();
+
+                int score = 0;
+                for (int j = 0; j < buildings[building.name].Count; j++)
+                {
+                    score += buildings[building.name][j].score;
+                }
+
+                info[i].scoreText.text = score.ToString();
+                return;
             }
-            //Debug.Log("Name: " + kvp.Key + " Score:" + score + " Count: " + kvp.Value.Count);
-            summary.text += "\n" + kvp.Key + " Score:" + score + " Count: " + kvp.Value.Count;
         }
 
+        // Create info
+        CreateInfo(building);
     }
 
+    private void CreateInfo(Building building)
+    {
+        UI.BuildingInfo newBuilding = Instantiate(summaryPrefab);
+        newBuilding.transform.SetParent(summaryParent, false);
+        newBuilding.nameText.text = building.name;
+        newBuilding.amountText.text = "1";
+        newBuilding.scoreText.text = Mathf.FloorToInt(building.score).ToString();
+        info.Add(newBuilding);
+    }
 
+    public class Building
+    {
+        public string name;
+        public int score;
+        public Building(Destroyable destroyable)
+        {
+            this.name = destroyable.buildingName;
+            this.score = destroyable.score;
+        }
+    }
 }

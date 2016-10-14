@@ -36,6 +36,6 @@ public class FallManager : MonoBehaviour
     {
         yield return new WaitForSeconds(WaitForSeconds);
         target.SetActive(active);
-        FindObjectOfType <BuildingTracker> ().ShowSummary ();
+        FindObjectOfType<BuildingTracker>().AddStackScore();
     }
 }
