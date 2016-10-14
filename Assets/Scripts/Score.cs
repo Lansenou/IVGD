@@ -20,6 +20,8 @@ public class Score : MonoBehaviour
     private static Color yellow = Color.yellow;
     private static Color red = Color.red;
 
+    public AudioClip PlacementSound;
+
     public enum Block {
         Perfect,
         Good,
@@ -100,18 +102,22 @@ public class Score : MonoBehaviour
                 case Block.Perfect:
                     multiplier += Perfect;
                     PopupController.CreateFloatingText("Perfect", blue);
+                    AudioSystem.instance.PlayPerfectSound();
                     break;
                 case Block.Good:
                     multiplier += Good;
                     PopupController.CreateFloatingText("Good", green);
+                    AudioSystem.instance.PlayGoodSound();
                     break;
                 case Block.Ok:
                     multiplier += Ok;
                     PopupController.CreateFloatingText("Ok", yellow);
+                    AudioSystem.instance.PlayOkSound();
                     break;
                 case Block.Bad:
                     multiplier = 1;
                     PopupController.CreateFloatingText("Bad", red);
+                    AudioSystem.instance.PlayBadSound();
                     break;
                 default:
                     multiplier = 1;
