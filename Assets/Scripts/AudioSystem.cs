@@ -5,7 +5,18 @@ public class AudioSystem : MonoBehaviour {
 
     public static AudioSystem instance;
     private AudioSource audioSource;
-    public AudioClip clip;
+
+    [SerializeField]
+    private AudioClip perfectSound;
+
+    [SerializeField]
+    private AudioClip goodSound;
+
+    [SerializeField]
+    private AudioClip OkSound;
+
+    [SerializeField]
+    private AudioClip BadSound;
 
     void Awake()
     {
@@ -20,24 +31,24 @@ public class AudioSystem : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         audioSource = GetComponent<AudioSource>();
     }
+
     public void PlayPerfectSound()
     {
-        audioSource.pitch = 1.0f;
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(perfectSound);
     }
+
     public void PlayGoodSound()
     {
-        audioSource.pitch = 0.8f;
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(goodSound);
     }
+
     public void PlayOkSound()
     {
-        audioSource.pitch = 0.6f;
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(OkSound);
     }
+
     public void PlayBadSound()
     {
-        audioSource.pitch = 0.4f;
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(BadSound);
     }
 }
