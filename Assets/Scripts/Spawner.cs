@@ -23,10 +23,12 @@ public class Spawner : MonoBehaviour
         {
             nextBlock.isKinematic = false;
             nextBlock.name = "Block " + blockCounter++;
-            HighScore.CurrentScore += 1;
+            HighScore.CurrentScore += 1;          
         }
         //Set last spawned block for camera follow script
         SmoothFollow.NewLastBlock(nextBlock);
+        //Shake the camera
+        CameraShake.Instance().ScreenShake(0.5f);
 
         // Score points
         if (score)
