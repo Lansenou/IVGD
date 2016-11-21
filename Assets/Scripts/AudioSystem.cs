@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class AudioSystem : MonoBehaviour {
@@ -28,7 +28,7 @@ public class AudioSystem : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(transform.root.gameObject);
         audioSource = GetComponent<AudioSource>();
     }
 
