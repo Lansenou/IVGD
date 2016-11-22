@@ -13,10 +13,19 @@ public class Spawner : MonoBehaviour
     private Rigidbody nextBlock;
     private float nextBlockY = 0;
     private int blockCounter = 0;
+    
+    [HideInInspector] private Color currentColor;
 
+    public void SetCurrentColor(Color Color)
+    {
+        currentColor = Color;
+    }
+    
     public void Spawn()
     {
         currentTime = (currentTime + Time.deltaTime) * Info.Color.ColorSpeed % 1;
+        //Set last spawned block for camera follow script
+        SmoothFollow.NewLastBlock(nextBlock);
 
         // Drop current
         if (nextBlock)
@@ -24,8 +33,6 @@ public class Spawner : MonoBehaviour
             nextBlock.isKinematic = false;
             nextBlock.name = "Block " + blockCounter++;
         }
-        //Set last spawned block for camera follow script
-        SmoothFollow.NewLastBlock(nextBlock);
 
         // Score points
         if (score)
@@ -65,7 +72,8 @@ public class Spawner : MonoBehaviour
     {
         GameObject block = Instantiate(Info.prefabs[Info.selectedPrefab], Info.Folder, false) as GameObject;
         block.transform.position = transform.position + new Vector3(0, 1);
-        block.GetComponent<Renderer>().material.color = Info.Color.Gradient.Evaluate(currentTime);
+        //block.GetComponent<Renderer>().material.color = Info.Color.Gradient.Evaluate(currentTime);
+        block.GetComponent<Renderer>().material.color = currentColor;
         block.name = "Placeholder Block";
 
         Rigidbody rigidbody = block.GetComponent<Rigidbody>();

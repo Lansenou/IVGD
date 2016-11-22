@@ -5,6 +5,7 @@ public class Movement : MonoBehaviour
 {
     public float AddHeight = 1;
     public float HeightSpeed = 0.25f;
+
     public Pattern Pattern;
 
     public Transform Base;
@@ -13,6 +14,9 @@ public class Movement : MonoBehaviour
     private Cycle currentCycle;
     private Vector3 startPosition;
     private Vector3 targetPosition;
+
+    private Vector3 baseDifference;
+    private float movementSpeed = 1f;
 
 
 
@@ -23,13 +27,22 @@ public class Movement : MonoBehaviour
         transform.position = basePosition = Base.position + Vector3.up * 3f;
         // Base position is the middle of the pattern, from which the block moves.
         basePosition.y = 0;
-
-        currentCycle = Pattern.GetCycleInfo(Cycle.Direction.ForwardX);
+        currentCycle = Pattern.GetCycleInfo(Cycle.Direction.First);
+        gameObject.GetComponent<Spawner>().SetCurrentColor(currentCycle.Color);
         StartCoroutine(Move());
     }
 
+
     public void MoveUp() {
+        baseDifference.x = basePosition.x - transform.position.x;
+        baseDifference.z = basePosition.z - transform.position.z;
+
         StartCoroutine(MoveY());
+        Pattern.SwitchCycles();
+        currentCycle = Pattern.GetCycleInfo(Cycle.Direction.First);
+        gameObject.GetComponent<Spawner>().SetCurrentColor(currentCycle.Color);
+        //startPosition = basePosition + currentCycle.TargetPos;
+        //StartCoroutine(Move());
     }
 
     private IEnumerator MoveY()
@@ -63,7 +76,7 @@ public class Movement : MonoBehaviour
             // Base position + the next target
             targetPosition = basePosition + currentCycle.TargetPos;
             // Add currentHeight to the targetPosition;
-            targetPosition += new Vector3(0, transform.position.y);
+            targetPosition += new Vector3(0 - baseDifference.x, transform.position.y, -baseDifference.z);
 
             float currentTime = 0;
             
@@ -74,13 +87,14 @@ public class Movement : MonoBehaviour
                 {
                     yield return null;
                 }
-                currentTime += Time.deltaTime/ currentCycle.MovementTime;
+                currentTime += Time.deltaTime/ movementSpeed;
                 transform.position = Vector3.Lerp(startPosition, targetPosition, currentTime);
                 yield return null;
             }
-
+            //currentCycle.MovementTime = movementSpeed;
+            movementSpeed = movementSpeed - 0.0025f;
             currentCycle = Pattern.GetNextCycle(currentCycle);
-
+            
             yield return null;
         }
     }
