@@ -15,6 +15,12 @@ namespace Assets.Scripts.Blocks
         private Rigidbody nextBlock;
         private float nextBlockY = 0;
         private int blockCounter = 0;
+        private Color currentColor;
+
+        public void SetCurrentColor(Color color)
+        {
+            currentColor = color;
+        }
 
         public void Spawn()
         {
@@ -72,7 +78,7 @@ namespace Assets.Scripts.Blocks
         {
             GameObject block = Instantiate(Info.prefabs[Info.selectedPrefab], Info.Folder, false) as GameObject;
             block.transform.position = transform.position + new Vector3(0, 1);
-            block.GetComponent<Renderer>().material.color = Info.Color.Gradient.Evaluate(currentTime);
+            block.GetComponent<Renderer>().material.color = currentColor;
             block.name = "Placeholder Block";
 
             Rigidbody rigidbody = block.GetComponent<Rigidbody>();

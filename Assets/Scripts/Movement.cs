@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Assets.Scripts.Blocks;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -28,7 +29,7 @@ public class Movement : MonoBehaviour
         // Base position is the middle of the pattern, from which the block moves.
         basePosition.y = 0;
         currentCycle = Pattern.GetCycleInfo(Cycle.Direction.First);
-        gameObject.GetComponent<Spawner>().SetCurrentColor(currentCycle.Color);
+        gameObject.GetComponent<BlockSpawner>().SetCurrentColor(currentCycle.Color);
         StartCoroutine(Move());
     }
 
@@ -40,7 +41,7 @@ public class Movement : MonoBehaviour
         StartCoroutine(MoveY());
         Pattern.SwitchCycles();
         currentCycle = Pattern.GetCycleInfo(Cycle.Direction.First);
-        gameObject.GetComponent<Spawner>().SetCurrentColor(currentCycle.Color);
+        gameObject.GetComponent<BlockSpawner>().SetCurrentColor(currentCycle.Color);
         //startPosition = basePosition + currentCycle.TargetPos;
         //StartCoroutine(Move());
     }
