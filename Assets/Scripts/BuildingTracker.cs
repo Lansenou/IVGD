@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Assets.Scripts.Blocks;
 
 public class BuildingTracker : MonoBehaviour {
 
     [SerializeField]
     private Transform summaryParent;
     [SerializeField]
-    private Spawner spawner;
+    private BlockSpawner blockSpawner;
     [SerializeField]
     private UI.BuildingInfo summaryPrefab;
     private Dictionary<string, List<Building>> buildings = new Dictionary<string, List<Building>>();
@@ -33,8 +34,8 @@ public class BuildingTracker : MonoBehaviour {
         newBuilding.transform.SetAsFirstSibling();
 
         newBuilding.nameText.text = "Tower";
-        newBuilding.amountText.text = spawner.GetBlockCount().ToString();
-        Metrics.Instance().GetBlockAmount(spawner.GetBlockCount());
+        newBuilding.amountText.text = blockSpawner.GetBlockCount().ToString();
+        Metrics.Instance().GetBlockAmount(blockSpawner.GetBlockCount());
         Metrics.Instance().PostAnalytics();
         newBuilding.scoreText.text = HighScore.CurrentScore.ToString("0");
         info.Add(newBuilding);
