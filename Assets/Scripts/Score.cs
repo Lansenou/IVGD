@@ -11,9 +11,11 @@ public class Score : MonoBehaviour
     [SerializeField] private bool useAverageList = true;
     [SerializeField] private Block minimalGradeToSnap = Block.Good;
 
+    [SerializeField]
     private Transform previousBlock = null;
     private float score = 0;
     private float placementScore = 1;
+    [SerializeField]
     private List<Transform> averageList = new List<Transform>();
 
     private static Color blue = Color.cyan;
@@ -43,29 +45,6 @@ public class Score : MonoBehaviour
             {
                 SnapBlock(addedBlock, average);
             }
-
-            // Solidify Tower
-            //if (grade >= Block.Ok)
-            //{
-            //    Vector3 previousBlock = averageList[0].position;
-            //    previousBlock.y = 0;
-
-            //    for (int i = 0; i < averageList.Count; i++)
-            //    {
-            //        Vector3 towerBlock = new Vector3(averageList[i].position.x, 0, averageList[i].position.z);
-
-            //        if (distance.GradeDistance(Vector3.Distance(previousBlock, towerBlock)) < minimalGradeToSnap)
-            //        {
-            //            Vector3 difference = previousBlock - towerBlock;
-            //            SnapBlock(averageList[i], averageList[i].transform.position + difference);
-            //            break;
-            //        }
-            //        else
-            //        {
-            //            previousBlock = towerBlock;
-            //        }
-            //    }                
-            //}
         }
         else
         {
