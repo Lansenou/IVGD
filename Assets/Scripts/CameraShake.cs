@@ -5,6 +5,8 @@ public class CameraShake : MonoBehaviour
 {
 
     public Camera mainCamera;
+    [HideInInspector]
+    public float shakeLength = .3f;
 
     public static CameraShake Instance()
     {
@@ -30,8 +32,8 @@ public class CameraShake : MonoBehaviour
     public void ScreenShake(float amount)
     {
         _shakeAmt = amount;
-        InvokeRepeating("ShakeCamera", 0, .01f);
-        Invoke("StopShaking", 0.3f);
+        InvokeRepeating("ShakeCamera", 0, .008f);
+        Invoke("StopShaking", shakeLength);
     }
 
     private void ShakeCamera()
