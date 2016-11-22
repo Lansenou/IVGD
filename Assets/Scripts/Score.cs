@@ -20,8 +20,6 @@ public class Score : MonoBehaviour
     private static Color yellow = Color.yellow;
     private static Color red = Color.red;
 
-    public AudioClip PlacementSound;
-
     public enum Block {
         Perfect,
         Good,
