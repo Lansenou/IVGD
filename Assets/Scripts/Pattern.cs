@@ -32,7 +32,6 @@ public class Pattern {
         if (CycleList1.Count == 0)
         {
             CycleList1 = CycleList;
-            Debug.LogWarning("cycle list set");
         }
         System.Random randomizer = new System.Random();
         int randomNum = randomizer.Next(4);
@@ -40,19 +39,15 @@ public class Pattern {
         {
             case 0:
                 CycleList = CycleList1;
-                Debug.LogWarning("cycle list 1!");
                 break;
             case 1:
                 CycleList = CycleList2;
-                Debug.LogWarning("cycle list 2!");
                 break;
             case 2:
                 CycleList = CycleList3;
-                Debug.LogWarning("cycle list 3!");
                 break;
             case 3:
                 CycleList = CycleList4;
-                Debug.LogWarning("cycle list 4!");
                 break;
         }
     }

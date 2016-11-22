@@ -20,11 +20,11 @@ namespace Assets.Scripts.Manager
         {
             if (lastBlock == block.name || blocks.Contains(block))
             {
-                Debug.Log(name + " block was already added");
+              //  Debug.Log(name + " block was already added");
                 return;
             }
 
-            Debug.Log(name + " adding block: " + block.name);
+           // Debug.Log(name + " adding block: " + block.name);
 
             lastBlock = block.name;
             blocks.Add(block);
