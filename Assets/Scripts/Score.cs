@@ -100,22 +100,22 @@ public class Score : MonoBehaviour
                 case Block.Perfect:
                     multiplier += Perfect;
                     PopupController.CreateFloatingText("Perfect", blue);
-                    AudioSystem.instance.PlayPerfectSound();
+                    AudioSystem.instance.PlayStackSound(true);
                     break;
                 case Block.Good:
                     multiplier += Good;
                     PopupController.CreateFloatingText("Good", green);
-                    AudioSystem.instance.PlayGoodSound();
+                    AudioSystem.instance.PlayStackSound(true);
                     break;
                 case Block.Ok:
                     multiplier += Ok;
                     PopupController.CreateFloatingText("Ok", yellow);
-                    AudioSystem.instance.PlayOkSound();
+                    AudioSystem.instance.PlayStackSound(false);
                     break;
                 case Block.Bad:
                     multiplier = 1;
                     PopupController.CreateFloatingText("Bad", red);
-                    AudioSystem.instance.PlayBadSound();
+                    AudioSystem.instance.PlayStackSound(false);
                     break;
                 default:
                     multiplier = 1;
