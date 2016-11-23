@@ -97,7 +97,8 @@ public class Destroyable : MonoBehaviour
                 HighScore.CurrentScore += score;
                 TrackBuilding ();
                 isDestroyed = true;
-                createExplosion();
+                CreateExplosion();
+                CameraShake.Instance().ScreenShake(.5f);
             }
         }
     }
@@ -108,7 +109,7 @@ public class Destroyable : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void createExplosion()
+    private void CreateExplosion()
     {
         if (!explosionPrefab)
         {
