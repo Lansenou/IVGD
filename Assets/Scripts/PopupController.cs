@@ -18,12 +18,13 @@ public class PopupController : MonoBehaviour
         }
     }
 
-    public static void CreateFloatingText(string text, Color color)
+    public static void CreateFloatingText(string text, Color color, float randomOffset = 0)
     {
         Initialize();
         FloatingPopupText instance = Instantiate(popupText);
         instance.transform.SetParent(canvas.transform, false);
-        instance.setText(text);
-        instance.setColor(color);
+        instance.SetText(text);
+        instance.SetColor(color);
+        instance.transform.position += new Vector3(0, Random.Range(-randomOffset, randomOffset));        
     }
 }

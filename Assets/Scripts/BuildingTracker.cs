@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Assets.Scripts.Blocks;
+using Assets.Scripts.Utility;
 
 public class BuildingTracker : MonoBehaviour {
 
@@ -44,6 +45,8 @@ public class BuildingTracker : MonoBehaviour {
     private void AddToInfo(Building building)
     {
         buildings[building.name].Add(building);
+
+        PopupController.CreateFloatingText(string.Format("{0} +{1}", building.name, building.score), Color.yellow, 20);
 
         // If already exists add score to current info
         for (int i = 0; i < info.Count; i++)

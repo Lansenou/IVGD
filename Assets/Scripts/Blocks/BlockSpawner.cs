@@ -35,7 +35,7 @@ namespace Assets.Scripts.Blocks
 
                 // Add the block to the manager
                 BuildingBlock buildingBlock = nextBlock.GetComponent<BuildingBlock>();
-                BlockManager.Instance().AddBlock(buildingBlock);
+                BlockManager.Instance.AddBlock(buildingBlock);
             }
             //Set last spawned block for camera follow script
             SmoothFollow.NewLastBlock(nextBlock);

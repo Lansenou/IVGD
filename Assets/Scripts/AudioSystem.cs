@@ -1,9 +1,9 @@
 using UnityEngine;
-using System.Collections;
+using Assets.Scripts.Utility;
 
-public class AudioSystem : MonoBehaviour {
+public class AudioSystem : Singleton<AudioSystem> {
 
-    public static AudioSystem instance;
+    [SerializeField]
     private AudioSource audioSource;
 
     [SerializeField]
@@ -11,20 +11,6 @@ public class AudioSystem : MonoBehaviour {
 
     [SerializeField]
     private AudioClip stackSound;
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(transform.root.gameObject);
-        audioSource = GetComponent<AudioSource>();
-    }
 
     public void PlayStackSound(bool cheer)
     {

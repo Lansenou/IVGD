@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.Blocks;
-using Assets.Scripts.Util;
+using Assets.Scripts.Utility;
 using UnityEngine;
 
 namespace Assets.Scripts.Manager
@@ -11,9 +11,9 @@ namespace Assets.Scripts.Manager
         private string lastBlock;
         private List<BuildingBlock> blocks = new List<BuildingBlock>();
 
-        protected override BlockManager GetClassType()
+        void Start()
         {
-            return this;
+            blocks = new List<BuildingBlock>();
         }
 
         public void AddBlock(BuildingBlock block)

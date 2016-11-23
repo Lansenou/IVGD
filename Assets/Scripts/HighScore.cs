@@ -15,7 +15,7 @@ public class HighScore : MonoBehaviour
     private void Start()
     {
         highScore = PlayerPrefs.GetFloat("HighScore", 0);
-        text2.text = "HighScore: " + highScore.ToString("0");
+        text2.text = "HighScore: " + highScore.ToString("0");   
         text.text = "" + (CurrentScore = 0);
     }
 
@@ -29,9 +29,7 @@ public class HighScore : MonoBehaviour
                 text2.text = "HighScore: " + (highScore = CurrentScore).ToString("0");
                 PlayerPrefs.SetFloat("HighScore", CurrentScore);
             }
-            Social.ReportScore(System.Convert.ToInt64(highScore), TitsResources.leaderboard_stack_score, (bool success) => {
-                // handle success or failure
-            });
+            Social.ReportScore(System.Convert.ToInt64(highScore), TitsResources.leaderboard_stack_score, (bool success) => { });
         }
     }
 }

@@ -44,7 +44,8 @@ public class Metrics : MonoBehaviour
         Analytics.CustomEvent("Blocks", new Dictionary<string, object>
         {
             {"Block amount", blockAmount },
-            {"Session time", playTime }
+            {"Session time", playTime },
+            {"Date time", dateTime }
         });
     }
 

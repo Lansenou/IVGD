@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Manager;
-using UnityEngine;
 
 namespace Assets.Scripts.Blocks
 {
@@ -7,7 +6,7 @@ namespace Assets.Scripts.Blocks
     {
         private void Start()
         {
-            BlockManager.Instance().AddBlock(this);
+            BlockManager.Instance.AddBlock(this);
         }
 
         private void Update ()

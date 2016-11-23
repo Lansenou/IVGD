@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class FloatingPopupText : MonoBehaviour {
 
-    public Animator animator;
+    [SerializeField]
+    private Animator animator;
+
+    [SerializeField]
+    private Text text;
+
     // Use this for initialization
     void Start ()
     {
@@ -12,13 +16,13 @@ public class FloatingPopupText : MonoBehaviour {
         Destroy(gameObject, clipInfo[0].clip.length);
     }
 
-    public void setText(string String)
+    public void SetText(string String)
     {
-        animator.GetComponentInChildren<Text>().text = String;
+        text.text = String;
     }
 
-    public void setColor(Color color)
+    public void SetColor(Color color)
     {
-        animator.GetComponentInChildren<Text>().color = color;
+        text.color = color;
     }
 }

@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
-using UnityEngine.SocialPlatforms;
+using Assets.Scripts.Utility;
 
-public class SignIn : MonoBehaviour
+public class SignIn : Singleton<SignIn>
 {
     void Start()
     {

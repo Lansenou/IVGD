@@ -1,28 +1,7 @@
 using UnityEngine;
-using System.Collections;
+using Assets.Scripts.Utility;
 
-public class BGMScript : MonoBehaviour
+public class BGMScript : Singleton<BGMScript>
 {
     public AudioSource audioSource;
-
-    private static BGMScript instance;
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(transform.root.gameObject);
-            audioSource.Play();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
