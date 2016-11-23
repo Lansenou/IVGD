@@ -4,49 +4,48 @@ namespace UnityStandardAssets.Utility
 {
 	public class SmoothFollow : MonoBehaviour
 	{
+	    [SerializeField]
+	    public bool DragCamera;
 
-		// The target we are following
-		[SerializeField]
-		private Transform target;
-		// The distance in the x-z plane to the target
-		[SerializeField]
-		private float distance = 10.0f;
-		// the height we want the camera to be above the target
-		[SerializeField]
-		private float height = 5.0f;
-
-	    [SerializeField] public bool DragCamera;
-
+        // The distance in the x-z plane to the target
         [SerializeField]
+        private float distance = 10.0f;
+
+        // the height we want the camera to be above the target
+        [SerializeField]
+        private float height = 5.0f;
+
+        // The target we are following
+        [SerializeField]
+		private Transform target;
+        
+	    [SerializeField]
 		private float rotationDamping;
+
 		[SerializeField]
 		private float heightDamping;
 
         [SerializeField]
         private Camera targetCamera;
-        [SerializeField]
+
+	    [SerializeField]
         private Transform startBlock;
-        [HideInInspector]
-        private float defaultFieldOfView;
-        [HideInInspector]
-        private Rigidbody lastBlock;
-        [HideInInspector]
-        private Transform camTarget;
-        [HideInInspector]
-        private bool camFollowBlock;
 
-	    [HideInInspector] private Vector3 startPosition;
+	    public float turnSpeed = 4.0f;      // Speed of camera turning when mouse moves in along an axis
+	    public float panSpeed = 4.0f;       // Speed of the camera when being panned
+	    public float zoomSpeed = 4.0f;      // Speed of the camera going back and forth
+        
+	    private bool isPanning;     // Is the camera being panned?
+	    private bool isRotating;    // Is the camera being rotated?
+	    private bool isZooming;     // Is the camera zooming?
+	    private bool camFollowBlock;
+	    private float defaultFieldOfView;
+	    private Rigidbody lastBlock;
+	    private Transform camTarget;
+	    private Vector3 startPosition;
+	    private Vector3 mouseOrigin;    // Position of cursor when mouse dragging starts
 
-        public float turnSpeed = 4.0f;      // Speed of camera turning when mouse moves in along an axis
-        public float panSpeed = 4.0f;       // Speed of the camera when being panned
-        public float zoomSpeed = 4.0f;      // Speed of the camera going back and forth
-
-        private Vector3 mouseOrigin;    // Position of cursor when mouse dragging starts
-        private bool isPanning;     // Is the camera being panned?
-        private bool isRotating;    // Is the camera being rotated?
-        private bool isZooming;     // Is the camera zooming?
-
-        // Use this for initialization
+	    // Use this for initialization
         void Start()
 	    {
 	        startPosition = startBlock.position;

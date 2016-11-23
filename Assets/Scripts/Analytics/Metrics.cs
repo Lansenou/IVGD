@@ -28,8 +28,6 @@ public class Metrics : MonoBehaviour
         {
             instance = this;
         }
-
-
         else if (instance != this)
         {
             Destroy(gameObject);
