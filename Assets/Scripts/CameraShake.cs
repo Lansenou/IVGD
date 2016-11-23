@@ -5,14 +5,13 @@ public class CameraShake : MonoBehaviour
 {
 
     public Camera mainCamera;
-    [HideInInspector]
-    public float shakeLength = .3f;
 
     public static CameraShake Instance()
     {
         return _instance;
     }
 
+    private float _shakeLength = .3f;
     private static CameraShake _instance;
     private Vector3 _originalCameraPosition;
     private float _shakeAmt = 0;
@@ -33,7 +32,12 @@ public class CameraShake : MonoBehaviour
     {
         _shakeAmt = amount;
         InvokeRepeating("ShakeCamera", 0, .008f);
-        Invoke("StopShaking", shakeLength);
+        Invoke("StopShaking", _shakeLength);
+    }
+
+    public void SetShakeLength(float length)
+    {
+        _shakeLength = length;
     }
 
     private void ShakeCamera()
