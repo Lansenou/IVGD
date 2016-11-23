@@ -7,16 +7,10 @@ public class AudioSystem : MonoBehaviour {
     private AudioSource audioSource;
 
     [SerializeField]
-    private AudioClip perfectSound;
+    private AudioClip cheerSound;
 
     [SerializeField]
-    private AudioClip goodSound;
-
-    [SerializeField]
-    private AudioClip OkSound;
-
-    [SerializeField]
-    private AudioClip BadSound;
+    private AudioClip stackSound;
 
     void Awake()
     {
@@ -32,23 +26,14 @@ public class AudioSystem : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void PlayPerfectSound()
+    public void PlayStackSound(bool cheer)
     {
-        audioSource.PlayOneShot(perfectSound);
-    }
-
-    public void PlayGoodSound()
-    {
-        audioSource.PlayOneShot(goodSound);
-    }
-
-    public void PlayOkSound()
-    {
-        audioSource.PlayOneShot(OkSound);
-    }
-
-    public void PlayBadSound()
-    {
-        audioSource.PlayOneShot(BadSound);
+        audioSource.pitch = (Random.Range(1.0f, 1.3f));
+        audioSource.PlayOneShot(stackSound, 0.5f);
+        if (cheer)
+        {
+            audioSource.pitch = 1.0f;
+            audioSource.PlayOneShot(cheerSound, 0.3f);
+        }
     }
 }
