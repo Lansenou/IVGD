@@ -4,25 +4,25 @@ using System.Collections;
 public class CameraShake : MonoBehaviour
 {
 
-    public Camera mainCamera;
+    public Camera MainCamera;
 
     public static CameraShake Instance()
     {
-        return _instance;
+        return instance;
     }
 
-    private float _shakeLength = .3f;
-    private static CameraShake _instance;
-    private Vector3 _originalCameraPosition;
-    private float _shakeAmt = 0;
+    private float shakeLength = .3f;
+    private static CameraShake instance;
+    private Vector3 originalCameraPosition;
+    private float shakeAmt = 0;
 
     void Awake()
     {
-        if (_instance == null)
+        if (instance == null)
         {
-            _instance = this;
+            instance = this;
         }
-        else if (_instance != this)
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
@@ -30,28 +30,28 @@ public class CameraShake : MonoBehaviour
 
     public void ScreenShake(float amount)
     {
-        _shakeAmt = amount;
+        shakeAmt = amount;
         InvokeRepeating("ShakeCamera", 0, .008f);
-        Invoke("StopShaking", _shakeLength);
+        Invoke("StopShaking", shakeLength);
     }
 
     public void SetShakeLength(float length)
     {
-        _shakeLength = length;
+        shakeLength = length;
     }
 
     private void ShakeCamera()
     {
         //Store the camera original position
-        _originalCameraPosition = mainCamera.transform.position;
+        originalCameraPosition = MainCamera.transform.position;
         //Shake the camera with a bit of randomness so each shake wont be the same
-        if (_shakeAmt > 0)
+        if (shakeAmt > 0)
         {            
-            float quakeAmt = Random.value * _shakeAmt * 2 - _shakeAmt;
-            Vector3 pp = mainCamera.transform.position;
+            float quakeAmt = Random.value * shakeAmt * 2 - shakeAmt;
+            Vector3 pp = MainCamera.transform.position;
             pp.y += quakeAmt;
             pp.x += quakeAmt;
-            mainCamera.transform.position = pp;
+            MainCamera.transform.position = pp;
         }
     }
 
@@ -59,6 +59,6 @@ public class CameraShake : MonoBehaviour
     {
         CancelInvoke("ShakeCamera");
         //reset camera to original position 
-        mainCamera.transform.position = _originalCameraPosition;
+        MainCamera.transform.position = originalCameraPosition;
     }
 }
