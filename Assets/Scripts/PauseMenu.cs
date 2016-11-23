@@ -37,7 +37,7 @@ public class PauseMenu : MonoBehaviour {
             Time.timeScale = 0;
             CurrentStatus = Status.Showing;
             gameObject.SetActive(true);
-            StartCoroutine(Showing());
+            StartCoroutine(Showing());           
         }
     }
 

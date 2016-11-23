@@ -29,6 +29,9 @@ public class HighScore : MonoBehaviour
                 text2.text = "HighScore: " + (highScore = CurrentScore).ToString("0");
                 PlayerPrefs.SetFloat("HighScore", CurrentScore);
             }
+            Social.ReportScore(System.Convert.ToInt64(highScore), TitsResources.leaderboard_stack_score, (bool success) => {
+                // handle success or failure
+            });
         }
     }
 }

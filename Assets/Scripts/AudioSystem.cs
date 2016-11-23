@@ -1,11 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class AudioSystem : MonoBehaviour {
 
     public static AudioSystem instance;
     private AudioSource audioSource;
-    public AudioClip clip;
+
+    [SerializeField]
+    private AudioClip cheerSound;
+
+    [SerializeField]
+    private AudioClip stackSound;
 
     void Awake()
     {
@@ -17,27 +22,18 @@ public class AudioSystem : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(transform.root.gameObject);
         audioSource = GetComponent<AudioSource>();
     }
-    public void PlayPerfectSound()
+
+    public void PlayStackSound(bool cheer)
     {
-        audioSource.pitch = 1.0f;
-        audioSource.PlayOneShot(clip);
-    }
-    public void PlayGoodSound()
-    {
-        audioSource.pitch = 0.8f;
-        audioSource.PlayOneShot(clip);
-    }
-    public void PlayOkSound()
-    {
-        audioSource.pitch = 0.6f;
-        audioSource.PlayOneShot(clip);
-    }
-    public void PlayBadSound()
-    {
-        audioSource.pitch = 0.4f;
-        audioSource.PlayOneShot(clip);
+        audioSource.pitch = (Random.Range(1.0f, 1.3f));
+        audioSource.PlayOneShot(stackSound, 0.5f);
+        if (cheer)
+        {
+            audioSource.pitch = 1.0f;
+            audioSource.PlayOneShot(cheerSound, 0.3f);
+        }
     }
 }
