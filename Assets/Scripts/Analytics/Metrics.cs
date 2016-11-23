@@ -3,8 +3,9 @@ using System.Collections;
 using UnityEngine.Analytics;
 using System.Collections.Generic;
 using System;
-
-public class Metrics : MonoBehaviour
+using Assets.Scripts.Utility;
+    
+public class Metrics : Singleton<Metrics>
 {
 
     /*
@@ -12,27 +13,10 @@ public class Metrics : MonoBehaviour
         Can't use CustomEvents in awake, onapplicationquit, start, etc.
         https://docs.unity3d.com/ScriptReference/Analytics.Analytics.CustomEvent.html
     */
-    private static Metrics instance;
+
     private float playTime;
     private DateTime dateTime;
     private int blockAmount;
-
-    public static Metrics Instance()
-    {
-        return instance;
-    }
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
 
     public void PostAnalytics()
     {

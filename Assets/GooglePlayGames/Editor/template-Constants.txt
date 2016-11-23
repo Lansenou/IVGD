@@ -1,4 +1,4 @@
-// <copyright file="GPGSIds.cs" company="Google Inc.">
+﻿// <copyright file="GPGSIds.cs" company="Google Inc.">
 // Copyright (C) 2015 Google Inc. All Rights Reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,14 +21,9 @@
 /// Resources.
 ///
 
-
-public static class TitsResources
+__NameSpaceStart__
+public static class __Class__
 {
-        public const string achievement_test5 = "CgkI9eSTnt4LEAIQBQ"; // <GPGSID>
-        public const string leaderboard_stack_score = "CgkI9eSTnt4LEAIQBg"; // <GPGSID>
-        public const string achievement_welcome_to_stack__destroy = "CgkI9eSTnt4LEAIQAQ"; // <GPGSID>
-        public const string achievement_test2 = "CgkI9eSTnt4LEAIQAg"; // <GPGSID>
-        public const string achievement_test3 = "CgkI9eSTnt4LEAIQAw"; // <GPGSID>
-        public const string achievement_test4 = "CgkI9eSTnt4LEAIQBA"; // <GPGSID>
+__Constant_Properties__
 }
-
+__NameSpaceEnd__

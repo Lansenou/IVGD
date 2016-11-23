@@ -36,8 +36,8 @@ public class BuildingTracker : MonoBehaviour {
 
         newBuilding.nameText.text = "Tower";
         newBuilding.amountText.text = blockSpawner.GetBlockCount().ToString();
-        Metrics.Instance().GetBlockAmount(blockSpawner.GetBlockCount());
-        Metrics.Instance().PostAnalytics();
+        Metrics.Instance.GetBlockAmount(blockSpawner.GetBlockCount());
+        Metrics.Instance.PostAnalytics();
         newBuilding.scoreText.text = HighScore.CurrentScore.ToString("0");
         info.Add(newBuilding);
     }
