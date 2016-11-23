@@ -10,16 +10,20 @@ namespace Assets.Scripts.Blocks
         public SpawnInfo Info;
         public SmoothFollow SmoothFollow;
 
-        private Score score;
-        private float currentTime = 0;
-        private Rigidbody nextBlock;
-        private float nextBlockY = 0;
+        [SerializeField]
+        private BlockTrail blockTrail;
+
         private int blockCounter = 0;
+        private float currentTime = 0;
+        private float nextBlockY = 0;
+        private Score score;
         private Color currentColor;
+        private Rigidbody nextBlock;
 
         public void SetCurrentColor(Color color)
         {
             currentColor = color;
+            blockTrail.SetColor(color);
         }
 
         public void Spawn()
@@ -36,9 +40,10 @@ namespace Assets.Scripts.Blocks
                 // Add the block to the manager
                 BuildingBlock buildingBlock = nextBlock.GetComponent<BuildingBlock>();
                 BlockManager.Instance.AddBlock(buildingBlock);
+                CameraShake.Instance().ScreenShake(.5f);
             }
             //Set last spawned block for camera follow script
-            SmoothFollow.NewLastBlock(nextBlock);
+            SmoothFollow.NewLastBlock(nextBlock);          
 
             // Score points
             if (score)
