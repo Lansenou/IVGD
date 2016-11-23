@@ -21,7 +21,7 @@ namespace Assets.Scripts.Util
             {
                 Destroy(gameObject);
             }
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(transform.root.gameObject);
         }
 
         protected abstract T GetClassType();
