@@ -17,11 +17,6 @@ public class CamToggle : MonoBehaviour
 	void Start () {
         icon = gameObject.GetComponent<Button>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     public void ToggleCams()
     {
