@@ -9,6 +9,7 @@ namespace Assets.Scripts.Blocks
     {
         public SpawnInfo Info;
         public SmoothFollow SmoothFollow;
+        public GameObject BuildParticles;
 
         [SerializeField]
         private BlockTrail blockTrail;
@@ -43,7 +44,10 @@ namespace Assets.Scripts.Blocks
                 CameraShake.Instance().ScreenShake(.5f);
             }
             //Set last spawned block for camera follow script
-            SmoothFollow.NewLastBlock(nextBlock);          
+            SmoothFollow.NewLastBlock(nextBlock);
+            Transform particles = Instantiate(BuildParticles).transform;
+            particles.position = Vector3.zero;
+            particles.SetParent(nextBlock.transform, false);
 
             // Score points
             if (score)
