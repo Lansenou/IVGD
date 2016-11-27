@@ -9,6 +9,8 @@ public class OnTap : MonoBehaviour
     private bool tapReleased = true;
     private EventSystem eventSystem;
 
+    public bool disableControls = false;
+
     void Start() 
     {
         eventSystem = EventSystem.current;
@@ -16,16 +18,19 @@ public class OnTap : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        if (Tapped())
-        {
-            tapReleased = false;
-            OnTapped.Invoke();
-        }
-        else
-        {
-            tapReleased = true;
-        }
-    }
+	    if (!disableControls)
+	    {
+	        if (Tapped())
+	        {
+	            tapReleased = false;
+	            OnTapped.Invoke();
+	        }
+	        else
+	        {
+	            tapReleased = true;
+	        }
+	    }
+	}
 
     private bool Tapped()
     {
@@ -35,6 +40,11 @@ public class OnTap : MonoBehaviour
             return !FallManager.DidFall && !eventSystem.IsPointerOverGameObject(0) && tapReleased && PauseMenu.CurrentStatus == PauseMenu.Status.Inactive;
         }
         return false;
+    }
+
+    public void setDisableControls(bool boolean)
+    {
+        disableControls = boolean;
     }
 
 }
