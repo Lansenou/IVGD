@@ -14,6 +14,8 @@ namespace Assets.Scripts.Blocks
         [SerializeField]
         private float smoothScaleTime = 0.3f;
 
+        private static TowerPhysics TowerPhysics;
+
         private int scaleIteration = 0;
         private int maxScaleIterations = 2;
         private float startY;
@@ -27,6 +29,10 @@ namespace Assets.Scripts.Blocks
 
         private void Start()
         {
+            if (TowerPhysics == null)
+            {
+                TowerPhysics = GameObject.FindObjectOfType<TowerPhysics>();
+            }
             startY = transform.position.y;
             scale = transform.localScale;
             scaleTarget = scale - new Vector3(scaleAmount, 0, scaleAmount);
@@ -127,6 +133,16 @@ namespace Assets.Scripts.Blocks
             {
                 scaleVelocity = Vector3.zero;
                 animate = false;
+            }
+        }
+
+        private void OnCollisionEnter(Collision coll)
+        {
+            if (coll.gameObject.CompareTag("towerBlock"))
+            {
+                Destroy(gameObject.GetComponent<Rigidbody>());
+                TowerPhysics.Direction();
+                transform.parent = TowerPhysics.gameObject.transform;
             }
         }
     }

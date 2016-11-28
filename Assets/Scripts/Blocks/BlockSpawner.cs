@@ -37,14 +37,16 @@ namespace Assets.Scripts.Blocks
                 nextBlock.isKinematic = false;
                 nextBlock.name = "Block " + blockCounter++;
                 HighScore.CurrentScore += 1;
-
+                nextBlock.GetComponent<BoxCollider>().enabled = true;
                 // Add the block to the manager
                 BuildingBlock buildingBlock = nextBlock.GetComponent<BuildingBlock>();
                 BlockManager.Instance.AddBlock(buildingBlock);
                 CameraShake.Instance().ScreenShake(.5f);
+
+                TowerPhysics.lastBlock = nextBlock.transform;
             }
             //Set last spawned block for camera follow script
-            SmoothFollow.NewLastBlock(nextBlock);
+            SmoothFollow.NewLastBlock(nextBlock.transform);
             Transform particles = Instantiate(BuildParticles).transform;
             particles.position = Vector3.zero;
             particles.SetParent(nextBlock.transform, false);
