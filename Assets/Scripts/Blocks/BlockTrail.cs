@@ -1,47 +1,49 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class BlockTrail : MonoBehaviour
+namespace Assets.Scripts.Blocks
 {
-    [SerializeField]
-    private ParticleSystem particleSystem;
-
-    private Vector3 oldPosition = Vector3.zero;
-    private Vector3 direction = Vector3.zero;
-
-    void Start()
+    public class BlockTrail : MonoBehaviour
     {
-        oldPosition = transform.position;
-        SetColor(Color.green);
-    }
+        [SerializeField]
+        private ParticleSystem particleSystem;
 
-    void Update()
-    {
-        CalculateDirection();
-        RotateTowardsDirection();
-    }
+        private Vector3 oldPosition = Vector3.zero;
+        private Vector3 direction = Vector3.zero;
 
-    public void SetColor(Color color)
-    {
-        var col = particleSystem.colorOverLifetime;
-        Gradient gradient = new Gradient();
-        gradient.SetKeys(new[] {new GradientColorKey(color, 0.0f), new GradientColorKey(color, 1.0f)},
-                         new[] {new GradientAlphaKey(1.0f, 0.5f), new GradientAlphaKey(0.0f, 1.0f)});
+        void Start()
+        {
+            oldPosition = transform.position;
+            SetColor(Color.green);
+        }
 
-        col.enabled = true;
-        col.color = gradient;
-    }
+        void Update()
+        {
+            CalculateDirection();
+            RotateTowardsDirection();
+        }
 
-    private void RotateTowardsDirection()
-    {
-        transform.LookAt(transform.position + direction, Vector3.up);
-    }
+        public void SetColor(Color color)
+        {
+            var col = particleSystem.colorOverLifetime;
+            Gradient gradient = new Gradient();
+            gradient.SetKeys(new[] {new GradientColorKey(color, 0.0f), new GradientColorKey(color, 1.0f)},
+                             new[] {new GradientAlphaKey(1.0f, 0.5f), new GradientAlphaKey(0.0f, 1.0f)});
 
-    private void CalculateDirection()
-    {
-        Vector3 newPosition = transform.position;
-        direction = newPosition - oldPosition;
-        direction.Normalize();
-        oldPosition = newPosition;
+            col.enabled = true;
+            col.color = gradient;
+        }
+
+        private void RotateTowardsDirection()
+        {
+            transform.LookAt(transform.position + direction, Vector3.up);
+        }
+
+        private void CalculateDirection()
+        {
+            Vector3 newPosition = transform.position;
+            direction = newPosition - oldPosition;
+            direction.Normalize();
+            oldPosition = newPosition;
+        }
     }
 }
