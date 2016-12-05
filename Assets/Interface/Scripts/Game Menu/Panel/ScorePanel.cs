@@ -1,15 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Assets.Interface.Scripts.Base;
 
-public class ScorePanel : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+namespace Assets.Interface.Scripts.Game_Menu.Panel
+{
+    public class ScorePanel : MenuPanel
+    {
+    }
 }
