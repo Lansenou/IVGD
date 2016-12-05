@@ -11,8 +11,7 @@ namespace Assets.Scripts.Blocks
         public SmoothFollow SmoothFollow;
         public GameObject BuildParticles;
 
-        [SerializeField]
-        private BlockTrail blockTrail;
+
 
         private int blockCounter = 0;
         private float currentTime = 0;
@@ -24,7 +23,6 @@ namespace Assets.Scripts.Blocks
         public void SetCurrentColor(Color color)
         {
             currentColor = color;
-            blockTrail.SetColor(color);
         }
 
         public void Spawn()
