@@ -39,11 +39,9 @@ namespace Assets.Scripts.Blocks
                 HighScore.CurrentScore += 1;
                 nextBlock.GetComponent<BoxCollider>().enabled = true;
                 // Add the block to the manager
-                BuildingBlock buildingBlock = nextBlock.GetComponent<BuildingBlock>();
+                BuildingBlock buildingBlock = nextBlock.GetComponentInChildren<BuildingBlock>();
                 BlockManager.Instance.AddBlock(buildingBlock);
                 CameraShake.Instance().ScreenShake(.5f);
-
-                TowerPhysics.lastBlock = nextBlock.transform;
             }
             //Set last spawned block for camera follow script
             SmoothFollow.NewLastBlock(nextBlock.transform);
@@ -89,7 +87,7 @@ namespace Assets.Scripts.Blocks
         {
             GameObject block = Instantiate(Info.prefabs[Info.selectedPrefab], Info.Folder, false) as GameObject;
             block.transform.position = transform.position + new Vector3(0, 1);
-            block.GetComponent<Renderer>().material.color = currentColor;
+            block.GetComponentInChildren<Renderer>().material.color = currentColor;
             block.name = "Placeholder Block";
 
             Rigidbody rigidbody = block.GetComponent<Rigidbody>();

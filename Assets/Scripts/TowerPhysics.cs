@@ -22,11 +22,12 @@ public class TowerPhysics : MonoBehaviour
 
    public void Direction()
    {
-       float multiplier = 0.2f+(blockCountert*0.005f);
+       float multiplier = 0.3f+(blockCountert*0.005f);
            if (towerTransform != null && lastBlock != null)
            {
                Vector3 heading = lastBlock.position - towerTransform.position;
                //Debug.Log(heading);
+               //Debug.Log(lastBlock.position);
                GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(heading.x*multiplier,0,heading.z*multiplier), lastBlock.position , ForceMode.Impulse);
            }
    }
