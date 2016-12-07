@@ -9,6 +9,9 @@ public class TowerPhysics : MonoBehaviour
     public static Transform lastBlock;
     private static Transform towerTransform;
 
+    [SerializeField]
+    private float towerFallDist;
+
     // Use this for initialization
     void Start ()
     {
@@ -19,14 +22,18 @@ public class TowerPhysics : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	    float d = Vector3.Distance(new Vector3(towerTransform.position.x, 0, towerTransform.position.z), new Vector3(lastBlock.position.x, 0, lastBlock.position.z));
-	    if (d > 5f)
+	    if (lastBlock != null)
 	    {
-	        OnTap.towerFalling = true;
-	    }
-	    else
-	    {
-	        OnTap.towerFalling = false;
+	        float d = Vector3.Distance(new Vector3(towerTransform.position.x, 0, towerTransform.position.z),
+	            new Vector3(lastBlock.position.x, 0, lastBlock.position.z));
+	        if (d > towerFallDist)
+	        {
+	            OnTap.towerFalling = true;
+	        }
+	        else
+	        {
+	            OnTap.towerFalling = false;
+	        }
 	    }
 	}
 
