@@ -122,6 +122,12 @@ namespace Assets.Scripts.Blocks
                 TowerPhysics.Direction();
                 transform.SetParent(TowerPhysics.gameObject.transform);
                 TowerPhysics.lastBlock = this.transform;
+                OnTap.blockLanded = true;
+            }
+            if (coll.gameObject.CompareTag("Platform"))
+            {
+                OnTap.blockLanded = true;
+                FallManager.DidFall = true;
             }
         }
     }
