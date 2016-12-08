@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Destroyable : MonoBehaviour
+public class Destroyable : MonoBehaviour, IResettable
 {
     public int score;
 
@@ -90,23 +90,22 @@ public class Destroyable : MonoBehaviour
 
     private void OnCollisionEnter(Collision coll)
     {
-        if (!isDestroyed)
-        {
             if (coll.collider.CompareTag ("towerBlock"))
             {
                 HighScore.CurrentScore += score;
                 TrackBuilding ();
-                isDestroyed = true;
                 CreateExplosion();
                 CameraShake.Instance().ScreenShake(.5f);
             }
-        }
     }
 
     void TrackBuilding()
     {
-        buildingTracker.AddBuilding (this);
-        Destroy(gameObject);
+        if (gameObject.activeSelf)
+        {
+            buildingTracker.AddBuilding(this);
+            gameObject.SetActive(false);
+        }
     }
 
     private void CreateExplosion()
@@ -118,5 +117,11 @@ public class Destroyable : MonoBehaviour
         GameObject explosion = Instantiate(explosionPrefab);
         explosion.transform.position = transform.position;
         explosion.transform.SetParent(transform.parent);
+    }
+
+    public void Reset()
+    {
+        if (!gameObject.activeInHierarchy)
+            gameObject.SetActive(true);
     }
 }

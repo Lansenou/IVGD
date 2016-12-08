@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Utility
@@ -7,7 +9,7 @@ namespace Assets.Scripts.Utility
     {
         public void RestartScene()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            ResetManager.Instance.Reset();
         }
 
         public void OpenLeaderboards()
@@ -61,5 +63,13 @@ namespace Assets.Scripts.Utility
                 Social.ShowAchievementsUI();
             }
         }
+        public void ResetScene()
+        {
+            foreach (var findObject in InterfaceHelper.FindObjects<IResettable>())
+            {
+                findObject.Reset();
+            }
+        }
     }
+
 }
