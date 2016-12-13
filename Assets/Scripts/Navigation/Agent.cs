@@ -57,7 +57,7 @@ public class Agent : MonoBehaviour
 
     private void UpdateRotation(Vector3 velocity)
     {
-        transform.localRotation = Quaternion.LookRotation(velocity, transform.up);
+        transform.localRotation = Quaternion.LookRotation(velocity, transform.up);      
     }
 
     private Vector3 GetDirection()

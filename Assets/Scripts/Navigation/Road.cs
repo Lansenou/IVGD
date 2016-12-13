@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-public abstract class Road : MonoBehaviour
+public class Road : MonoBehaviour
 {
     public float waypointOffset = -1.5f;
 
@@ -36,9 +36,9 @@ public abstract class Road : MonoBehaviour
         }
     }
 
-    public abstract RoadType GetRoadType();
-    public abstract int WaypointLimit();
-    public abstract void CalculateWaypointPosition();
+//    public abstract RoadType GetRoadType();
+//    public abstract int WaypointLimit();
+//    public abstract void CalculateWaypointPosition();
 
     public void AddWaypoint(Waypoint waypoint)
     {
