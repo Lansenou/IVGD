@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.IO;
 
@@ -8,6 +8,9 @@ public class ShareIntent : MonoBehaviour {
     private string gameLink = "Download the game on the Play Store at: " + "\nhttps://play.google.com/store/apps/details?id=com.TITS.StackDestroy&pcampaignid=GPC_shareGame";
     private string subject = "Stack and Destroy";
     private bool isProcessing = false;
+
+    [SerializeField]
+    private Camera renderCamera;
 
     
     public void Share()
@@ -22,17 +25,17 @@ public class ShareIntent : MonoBehaviour {
     {
         RenderTexture screenshotTexture = new RenderTexture(Screen.width, Screen.height, 24);
 
-        // Set Render Texture to camera
-        Camera mainCamera = Camera.main;
-        mainCamera.targetTexture = screenshotTexture;
-        mainCamera.Render();
+        renderCamera.targetTexture = screenshotTexture;
+        renderCamera.Render();
 
         Texture2D imageOverview = new Texture2D(screenshotTexture.width, screenshotTexture.height, TextureFormat.RGB24, false);
         imageOverview.ReadPixels(new Rect(0, 0, screenshotTexture.width, screenshotTexture.height), 0, 0);
         imageOverview.Apply();
 
         // Reset Render Texture
-        mainCamera.targetTexture = null;
+        renderCamera.targetTexture = null;
+        renderCamera.enabled = false;
+
         Destroy(screenshotTexture);
 
         return imageOverview.EncodeToPNG();
@@ -41,18 +44,23 @@ public class ShareIntent : MonoBehaviour {
     private IEnumerator ShareScreenshot()
     {
         isProcessing = true;
+        // Activate Rendercamera
+        renderCamera.enabled = true;
         yield return new WaitForEndOfFrame();
 
         byte[] dataToSave = TakeScreenShot();
 
         string destination = Path.Combine(Application.persistentDataPath, System.DateTime.Now.ToString("yyyy-MM-dd-HHmmss") + ".png");
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.RevealInFinder(destination);
+#endif
         Debug.Log("[ShareIntent] Screenshot destination: " + destination);
         File.WriteAllBytes(destination, dataToSave);
 
 #if UNITY_ANDROID
         if (!Application.isEditor)
         {
-            string newShareText = string.Format(shareText, HighScore.CurrentScore.ToString("0"));
+            string newShareText = string.Format(shareText, HighScore.GetScore.ToString("0"));
 
             // Android intent code taken from http://www.thegamecontriver.com/2015/09/unity-share-post-image-to-facebook.html?showComment=1455523299779
 

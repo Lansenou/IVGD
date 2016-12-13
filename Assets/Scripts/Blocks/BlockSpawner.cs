@@ -17,7 +17,7 @@ namespace Assets.Scripts.Blocks
         private int blockCounter = 0;
         private float currentTime = 0;
         private float nextBlockY = 0;
-        private Score score;
+        private Scoring score;
         private Color currentColor;
         private Rigidbody nextBlock;
 
@@ -51,7 +51,7 @@ namespace Assets.Scripts.Blocks
         {
             nextBlock.isKinematic = false;
             nextBlock.name = "Block " + blockCounter++;
-            HighScore.CurrentScore += 1;
+            HighScore.instance.CurrentScore += 1;
             nextBlock.GetComponent<BoxCollider>().enabled = true;
             // Add the block to the manager
             BuildingBlock buildingBlock = nextBlock.GetComponentInChildren<BuildingBlock>();
@@ -76,7 +76,7 @@ namespace Assets.Scripts.Blocks
 
         private void Start()
         {
-            score = FindObjectOfType<Score>();
+            score = FindObjectOfType<Scoring>();
             nextBlockY = transform.position.y;
             nextBlock = getBlock();
         }

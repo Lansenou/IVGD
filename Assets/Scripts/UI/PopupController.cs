@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PopupController : MonoBehaviour
@@ -23,6 +23,7 @@ public class PopupController : MonoBehaviour
         Initialize();
         FloatingPopupText instance = Instantiate(popupText);
         instance.transform.SetParent(canvas.transform, false);
+        instance.transform.position = canvas.transform.position;
         instance.SetText(text);
         instance.SetColor(color);
         instance.transform.position += new Vector3(0, Random.Range(-randomOffset, randomOffset));        
