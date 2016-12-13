@@ -1,47 +1,95 @@
-﻿using UnityEngine;
+using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class HighScore : MonoBehaviour
 {
-    public static float CurrentScore;
+    public static HighScore instance;
 
-    private float highScore = 0;
-    private float prevScore = 0;
-
-    [SerializeField] private Text text;
-    [SerializeField] private Text text2;
-
-    // Use this for initialization
-    private void Start()
+    public static float GetScore
     {
-        highScore = PlayerPrefs.GetFloat("HighScore", 0);
-        text2.text = "HighScore: " + highScore.ToString("0");   
-        text.text = "" + (CurrentScore = 0);
+        get { return instance.currentScore; }
     }
 
-    private void Update()
+    private float currentScore = 0;
+    public float CurrentScore
+    {
+        get { return currentScore; }
+        set
+        {
+            currentScore = value;
+            OnScoreUpdate.Invoke(currentScore);
+            UpdateScore();
+        }
+    }
+
+    public UnityAction<float> OnScoreUpdate;
+    public UnityAction<float> OnHighScoreUpdate;
+
+    [SerializeField]
+    Text scoreText;
+    [SerializeField]
+    Text highscoreText;
+
+    void Awake()
+    {
+        instance = this;
+        OnHighScoreUpdate += (float score) => { highscoreText.text = "Best " + score.ToString("0"); };
+        OnScoreUpdate += (float score) => { scoreText.text = score.ToString("0"); };
+        OnHighScoreUpdate.Invoke(highScore = PlayerPrefs.GetFloat("Highscore", 0));
+    }
+
+    void OnEnable()
+    {
+        UpdateScore();
+        Reset();
+    }
+
+    // Use this for initialization
+    void Reset()
+    {
+        CurrentScore = 0;
+    }
+
+    private float highScore = 0;
+    private static float prevScore = 0;
+    
+    public float GetHighscore()
+    {
+        return highScore;
+    }
+
+    public float GetCurrentScore()
+    {
+        return CurrentScore;
+    }
+
+    void UpdateScore()
     {
         if (CurrentScore > prevScore)
         {
-            text.text = "" + (prevScore = CurrentScore).ToString("0");
             if (CurrentScore > highScore)
             {
-                text2.text = "HighScore: " + (highScore = CurrentScore).ToString("0");
-                PlayerPrefs.SetFloat("HighScore", CurrentScore);
-            }
+                OnHighScoreUpdate.Invoke(highScore = currentScore);
+                PlayerPrefs.SetFloat("Highscore", highScore);
+                Debug.Log("Highscore" + highScore);
+                prevScore = currentScore;
 
-            if (!Social.localUser.authenticated)
-            {
-                Social.localUser.Authenticate((bool succes) =>
+                if (!Social.localUser.authenticated)
                 {
-                    if (succes)
+                    Social.localUser.Authenticate((bool succes) =>
                     {
-                        Social.ReportScore(System.Convert.ToInt64(highScore), TitsResources.leaderboard_stack_score, (bool success) => { });
-                    }
-                });
+                        if (succes)
+                        {
+                            Social.ReportScore(System.Convert.ToInt64(highScore), TitsResources.leaderboard_stack_score, (bool success) => { });
+                        }
+                    });
+                }
+                else
+                {
+                    Social.ReportScore(System.Convert.ToInt64(highScore), TitsResources.leaderboard_stack_score, (bool success) => { });
+                }
             }
-
-
         }
     }
 }

@@ -1,41 +1,29 @@
-﻿using System.Collections;
 using UnityEngine;
 
 public class QuitGame : MonoBehaviour 
 {
-    public KeyCode QuitButton = KeyCode.Escape;
-    public float CooldownTime = 0.2f;
-    public GameObject Target;
-
+    [SerializeField]
+    private KeyCode QuitButton = KeyCode.Escape;
+    [SerializeField]
+    private GameObject Target;
     private bool pressed = false;
-    private bool secondPress = false;
 	
 	// Update is called once per frame
 	private void Update () {
-        if (!pressed && Input.GetKeyDown(QuitButton)) 
+        if (Input.GetKeyDown(QuitButton)) 
         {
-            pressed = true;
-            Target.SetActive(true);
-            StartCoroutine(Quit());
-        } 
-        else if (pressed && Input.GetKeyDown(QuitButton))
-        {
-            secondPress = true;
+            pressed = !pressed;
+            Target.SetActive(pressed);
         }
 	}
 
-    private IEnumerator Quit()
+    public void Quit()
     {
-        float startTime = Time.realtimeSinceStartup;
+        Application.Quit();
+    }
 
-        while (Time.realtimeSinceStartup - startTime < CooldownTime)
-        {
-            if (secondPress)
-            {
-                Application.Quit();
-            }
-            yield return null;
-        }
+    public void CancelQuit()
+    {
         pressed = false;
         Target.SetActive(false);
     }
@@ -46,11 +34,6 @@ public class QuitGame : MonoBehaviour
             Application.CancelQuit();
             pressed = true;
             Target.SetActive(true);
-            StartCoroutine(Quit());
         } 
-        else
-        {
-            Application.Quit();
-        }
     }
 }

@@ -3,11 +3,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Score : MonoBehaviour
+public class Scoring : MonoBehaviour
 {
     [SerializeField] private Distance distance;
     [SerializeField] private Multiplier multiplier;
-    [SerializeField] private Text multiplierText;
+    [SerializeField] private Text scoreText;
     [SerializeField] private bool useAverageList = true;
     [SerializeField] private Block minimalGradeToSnap = Block.Good;
 
@@ -27,6 +27,26 @@ public class Score : MonoBehaviour
         Ok,
         Good,
         Perfect
+    }
+
+    public void AddPoints(Transform addedBlock)
+    {
+        if (useAverageList)
+        {
+            GradeList(addedBlock);
+        }
+        else
+        {
+            GradePrevious(addedBlock);
+        }
+
+        // Update text
+        HighScore.instance.CurrentScore = score;
+    }
+
+    private void Start()
+    {
+        HighScore.instance.OnScoreUpdate += (float score) => { scoreText.text = score.ToString("0"); };
     }
 
     private void GradeList(Transform addedBlock)
@@ -68,22 +88,6 @@ public class Score : MonoBehaviour
         }
 
         previousBlock = addedBlock;
-    }
-
-    public void AddPoints(Transform addedBlock)
-    {
-        if (useAverageList)
-        {
-            GradeList(addedBlock);
-        } 
-        else 
-        {
-            GradePrevious(addedBlock);
-        }
-
-        // Update text
-        HighScore.CurrentScore = score;
-        multiplierText.text = "Multiplier: " + multiplier.GetMultiplier().ToString("0.00");
     }
 
     private void SnapBlock(Transform block, Vector3 position)

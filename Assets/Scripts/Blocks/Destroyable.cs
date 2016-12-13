@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class Destroyable : MonoBehaviour
 {
@@ -94,7 +94,7 @@ public class Destroyable : MonoBehaviour
         {
             if (coll.collider.CompareTag ("towerBlock"))
             {
-                HighScore.CurrentScore += score;
+                HighScore.instance.CurrentScore += score;
                 TrackBuilding ();
                 isDestroyed = true;
                 CreateExplosion();

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using Assets.Scripts.Blocks;
 using Assets.Scripts.Utility;
@@ -38,7 +38,7 @@ public class BuildingTracker : MonoBehaviour {
         newBuilding.amountText.text = blockSpawner.GetBlockCount().ToString();
         Metrics.Instance.GetBlockAmount(blockSpawner.GetBlockCount());
         Metrics.Instance.PostAnalytics();
-        newBuilding.scoreText.text = HighScore.CurrentScore.ToString("0");
+        newBuilding.scoreText.text = HighScore.instance.CurrentScore.ToString("0");
         info.Add(newBuilding);
     }
 
@@ -46,7 +46,7 @@ public class BuildingTracker : MonoBehaviour {
     {
         buildings[building.name].Add(building);
 
-        PopupController.CreateFloatingText(string.Format("{0} +{1}", building.name, building.score), Color.yellow, 20);
+        PopupController.CreateFloatingText(string.Format("{0} +{1}", building.name, building.score), Color.yellow, 0);
 
         // If already exists add score to current info
         for (int i = 0; i < info.Count; i++)
