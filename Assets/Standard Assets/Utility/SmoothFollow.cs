@@ -40,7 +40,7 @@ namespace UnityStandardAssets.Utility
 	    private bool isZooming;     // Is the camera zooming?
 	    private bool camFollowBlock;
 	    private float defaultFieldOfView;
-	    private Rigidbody lastBlock;
+	    private Transform lastBlock;
 	    private Transform camTarget;
 	    private Vector3 startPosition;
 	    private Vector3 mouseOrigin;    // Position of cursor when mouse dragging starts
@@ -59,7 +59,7 @@ namespace UnityStandardAssets.Utility
             // Check if tower is falling
             if (Input.GetKey(KeyCode.A) || camFollowBlock) //todo change this to an event when detected that the tower is falling.
             {
-                float newFOV = defaultFieldOfView + Vector3.Distance(lastBlock.transform.position, startPosition);
+                float newFOV = defaultFieldOfView + Vector3.Distance(lastBlock.position, startPosition);
                 if (newFOV > 135)
                 {
                     newFOV = 135;
@@ -169,9 +169,9 @@ namespace UnityStandardAssets.Utility
             }
         }
 
-	    public void NewLastBlock(Rigidbody newBlock)
+	    public void NewLastBlock(Transform newBlock)
         {
-            lastBlock = newBlock;
+            lastBlock= newBlock;
             target = lastBlock.transform;
         }
 

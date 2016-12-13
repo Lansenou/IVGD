@@ -9,10 +9,12 @@ namespace Assets.Scripts.Blocks
         private float maxFallDistance = 5f;
 
         [SerializeField]
-        private float scaleAmount = 2f;
+        private float scaleAmount = 0.15f;
 
         [SerializeField]
-        private float smoothScaleTime = 0.3f;
+        private float smoothScaleTime = 0.2f;
+
+        private static TowerPhysics TowerPhysics;
 
         private int scaleIteration = 0;
         private int maxScaleIterations = 2;
@@ -27,8 +29,12 @@ namespace Assets.Scripts.Blocks
 
         private void Start()
         {
+            if (TowerPhysics == null)
+            {
+                TowerPhysics = GameObject.FindObjectOfType<TowerPhysics>();
+            }
             startY = transform.position.y;
-            scale = transform.localScale;
+            scale = transform.GetChild(0).localScale;
             scaleTarget = scale - new Vector3(scaleAmount, 0, scaleAmount);
         }
 
@@ -40,7 +46,10 @@ namespace Assets.Scripts.Blocks
             }
 
             if (animate)
+            {
                 Animate();
+            }
+
         }
 
         public void PlayAnimation()
@@ -71,10 +80,10 @@ namespace Assets.Scripts.Blocks
 
         private void Animate()
         {
-            transform.localScale = Vector3.SmoothDamp(transform.localScale, scaleTarget, ref scaleVelocity,
+            transform.GetChild(0).localScale = Vector3.SmoothDamp(transform.GetChild(0).localScale, scaleTarget, ref scaleVelocity,
                                                       smoothScaleTime);
 
-            if (!animationFinishing && TargetReached(transform.localScale.x, scaleTarget.x, scaleThreshold))
+            if (!animationFinishing && TargetReached(transform.GetChild(0).localScale.x, scaleTarget.x, scaleThreshold))
             {
                 scaleIteration++;
 
@@ -88,7 +97,8 @@ namespace Assets.Scripts.Blocks
                                       ? (scale + new Vector3(scaleAmount, 0, scaleAmount))
                                       : (scale - new Vector3(scaleAmount, 0, scaleAmount));
             }
-            else if (animationFinishing && TargetReached(transform.localScale.x, scaleTarget.x, scaleThreshold))
+
+            else if (animationFinishing && TargetReached(transform.GetChild(0).localScale.x, scaleTarget.x, scaleThreshold))
             {
                 animate = false;
                 animationFinishing = false;
@@ -96,21 +106,6 @@ namespace Assets.Scripts.Blocks
                 scaleTarget = scale - new Vector3(scaleAmount, 0, scaleAmount);
             }
 
-
-            //            if (expanded)
-            //                Shrink();
-            //            else
-            //                Expand();
-        }
-
-        private void Shrink()
-        {
-            Vector3 target = scale - new Vector3(scaleAmount, 0, scaleAmount);
-
-            if (transform.localScale.x - target.x < 0.05)
-            {
-                scaleVelocity = Vector3.zero;
-            }
         }
 
         private bool TargetReached(float current, float target, float threshold)
@@ -118,15 +113,21 @@ namespace Assets.Scripts.Blocks
             return Mathf.Abs(target - current) < threshold;
         }
 
-        private void Expand()
-        {
-            Vector3 target = scale;
-            transform.localScale = Vector3.SmoothDamp(transform.localScale, target, ref scaleVelocity, smoothScaleTime);
 
-            if (target.x - transform.localScale.x < 0.05)
+        private void OnCollisionEnter(Collision coll)
+        {
+            if (coll.gameObject.CompareTag("towerBlock"))
             {
-                scaleVelocity = Vector3.zero;
-                animate = false;
+                Destroy(gameObject.GetComponent<Rigidbody>());
+                TowerPhysics.Direction();
+                transform.SetParent(TowerPhysics.gameObject.transform);
+                TowerPhysics.lastBlock = this.transform;
+                OnTap.blockLanded = true;
+            }
+            if (coll.gameObject.CompareTag("Platform"))
+            {
+                OnTap.blockLanded = true;
+                FallManager.DidFall = true;
             }
         }
     }

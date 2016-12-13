@@ -5,7 +5,9 @@ using UnityEngine.EventSystems;
 public class OnTap : MonoBehaviour
 {
     public UnityEvent OnTapped;
-
+    public static bool blockLanded = true;
+    public static bool blockAvailable = true;
+    public static bool towerFalling = false;
     private bool tapReleased = true;
     private EventSystem eventSystem;
 
@@ -17,13 +19,21 @@ public class OnTap : MonoBehaviour
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+
 	    if (!disableControls)
 	    {
+
 	        if (Tapped())
 	        {
-	            tapReleased = false;
-	            OnTapped.Invoke();
+	            if (blockLanded && blockAvailable && !towerFalling)
+	            {
+	                tapReleased = false;
+	                OnTapped.Invoke();
+	                blockLanded = false;
+	                blockAvailable = false;
+	            }
 	        }
 	        else
 	        {

@@ -1,3 +1,4 @@
+﻿using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Manager;
 using UnityEngine;
@@ -11,8 +12,7 @@ namespace Assets.Scripts.Blocks
         public SmoothFollow SmoothFollow;
         public GameObject BuildParticles;
 
-        [SerializeField]
-        private BlockTrail blockTrail;
+        private bool spawnBlock = false;
 
         private int blockCounter = 0;
         private float currentTime = 0;
@@ -24,27 +24,14 @@ namespace Assets.Scripts.Blocks
         public void SetCurrentColor(Color color)
         {
             currentColor = color;
-            blockTrail.SetColor(color);
         }
 
         public void Spawn()
         {
             currentTime = (currentTime + Time.deltaTime) * Info.Color.ColorSpeed % 1;
 
-            // Drop current
-            if (nextBlock)
-            {
-                nextBlock.isKinematic = false;
-                nextBlock.name = "Block " + blockCounter++;
-                HighScore.instance.CurrentScore += 1;
-
-                // Add the block to the manager
-                BuildingBlock buildingBlock = nextBlock.GetComponent<BuildingBlock>();
-                BlockManager.Instance.AddBlock(buildingBlock);
-                CameraShake.Instance().ScreenShake(.5f);
-            }
             //Set last spawned block for camera follow script
-            SmoothFollow.NewLastBlock(nextBlock);
+            SmoothFollow.NewLastBlock(nextBlock.transform);
             Transform particles = Instantiate(BuildParticles).transform;
             particles.position = Vector3.zero;
             particles.SetParent(nextBlock.transform, false);
@@ -56,14 +43,35 @@ namespace Assets.Scripts.Blocks
             }
         
             //Get new block
-            nextBlock = getBlock();
+            StartCoroutine(SpawnNewBlock());
             nextBlockY = transform.position.y + 3;
+        }
+
+        public void DropBlock()
+        {
+            nextBlock.isKinematic = false;
+            nextBlock.name = "Block " + blockCounter++;
+            HighScore.instance.CurrentScore += 1;
+            nextBlock.GetComponent<BoxCollider>().enabled = true;
+            // Add the block to the manager
+            BuildingBlock buildingBlock = nextBlock.GetComponentInChildren<BuildingBlock>();
+            BlockManager.Instance.AddBlock(buildingBlock);
+            CameraShake.Instance().ScreenShake(.5f);
         }
 
         public int GetBlockCount()
         {
             return blockCounter;
         }
+
+         IEnumerator SpawnNewBlock()
+         {
+            DropBlock();
+            nextBlock = null;
+            yield return new WaitForSeconds(1f);
+            nextBlock = getBlock();
+            OnTap.blockAvailable = true;
+         }
 
 
         private void Start()
@@ -87,7 +95,7 @@ namespace Assets.Scripts.Blocks
         {
             GameObject block = Instantiate(Info.prefabs[Info.selectedPrefab], Info.Folder, false) as GameObject;
             block.transform.position = transform.position + new Vector3(0, 1);
-            block.GetComponent<Renderer>().material.color = currentColor;
+            block.GetComponentInChildren<Renderer>().material.color = currentColor;
             block.name = "Placeholder Block";
 
             Rigidbody rigidbody = block.GetComponent<Rigidbody>();
