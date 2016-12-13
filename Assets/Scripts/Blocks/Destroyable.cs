@@ -21,6 +21,9 @@ public class Destroyable : MonoBehaviour
     [HideInInspector]
     private static GameObject explosionPrefab;
 
+    [SerializeField]
+    private bool destroyParent = false;
+
     public ObjectSort SortObject;
     private bool isDestroyed = false;
 
@@ -99,6 +102,7 @@ public class Destroyable : MonoBehaviour
                 isDestroyed = true;
                 CreateExplosion();
                 CameraShake.Instance().ScreenShake(.5f);
+                FallManager.BuildingHasExploded = true;
             }
         }
     }
@@ -106,7 +110,7 @@ public class Destroyable : MonoBehaviour
     void TrackBuilding()
     {
         buildingTracker.AddBuilding (this);
-        Destroy(gameObject);
+        Destroy(destroyParent ? transform.parent.gameObject : gameObject);
     }
 
     private void CreateExplosion()
@@ -117,6 +121,6 @@ public class Destroyable : MonoBehaviour
         }
         GameObject explosion = Instantiate(explosionPrefab);
         explosion.transform.position = transform.position;
-        explosion.transform.SetParent(transform.parent);
+        explosion.transform.SetParent(destroyParent ? transform.parent.parent : transform.parent);
     }
 }

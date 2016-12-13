@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -23,8 +23,11 @@ public class Agent : MonoBehaviour
     
     void Update()
     {
-        UpdateDestination();
-        MoveToDestination();
+        if (!FallManager.DidFall)
+        {
+            UpdateDestination();
+            MoveToDestination();
+        }
     }
 
     private void UpdateDestination()

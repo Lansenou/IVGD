@@ -1,19 +1,19 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using UnityStandardAssets.Utility;
 
 public class FallManager : MonoBehaviour
 {
     public static bool DidFall;
-    public GameObject Timer;
+    public static bool BuildingHasExploded = false;
+    public TimerScript Timer;
 
     [SerializeField]
     private int WaitForSeconds = 5;
     [SerializeField]
     private UnityEvent OnFall;
-    [SerializeField]
-    private GameObject target;
     [SerializeField]
     private SmoothFollow cameraFollow;
 
@@ -33,15 +33,27 @@ public class FallManager : MonoBehaviour
         {
             StartCoroutine(EnableTarget(hasFallen = DidFall));
             cameraFollow.SetGameOverCam();
-            OnFall.Invoke();
-            Destroy(Timer);
+            FindObjectOfType<BuildingTracker>().AddStackScore();
+            Timer.enabled = false;
         }
     }
 
     private IEnumerator EnableTarget(bool active)
     {
-        yield return new WaitForSeconds(WaitForSeconds);
-        target.SetActive(active);
-        FindObjectOfType<BuildingTracker>().AddStackScore();
+        Text text = Timer.GetText();
+        text.color = Color.white;
+        float currentTime = 0;
+        while (currentTime < WaitForSeconds)
+        {
+            if (BuildingHasExploded)
+            {
+                BuildingHasExploded = false;
+                currentTime = 0;
+            }
+            currentTime += Time.deltaTime;
+            text.text = (WaitForSeconds - currentTime).ToString("0.0");
+            yield return null;
+        }
+        OnFall.Invoke();
     }
 }
