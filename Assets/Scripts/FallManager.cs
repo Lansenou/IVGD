@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityStandardAssets.Utility;
@@ -6,6 +6,7 @@ using UnityStandardAssets.Utility;
 public class FallManager : MonoBehaviour
 {
     public static bool DidFall;
+    public GameObject Timer;
 
     [SerializeField]
     private int WaitForSeconds = 5;
@@ -33,12 +34,14 @@ public class FallManager : MonoBehaviour
             StartCoroutine(EnableTarget(hasFallen = DidFall));
             cameraFollow.SetGameOverCam();
             OnFall.Invoke();
+            Destroy(Timer);
         }
     }
 
     private IEnumerator EnableTarget(bool active)
     {
         yield return new WaitForSeconds(WaitForSeconds);
+        target.SetActive(active);
         FindObjectOfType<BuildingTracker>().AddStackScore();
     }
 }

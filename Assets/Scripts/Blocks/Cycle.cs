@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class Cycle : ScriptableObject
 {
     public Color Color = new Color(1, 1, 1);
+    public float Time = 10;     //In seconds
     public List<Target> Cycles = new List<Target>();
 
     private int index;
@@ -24,5 +25,10 @@ public class Cycle : ScriptableObject
     public void IncreaseIndex()
     {
         index = (index + 1) % Cycles.Count;
+    }
+
+    public float GetTime()
+    {
+        return Time;
     }
 }

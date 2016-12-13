@@ -15,6 +15,8 @@ public class Movement : MonoBehaviour
     private Vector3 startPosition;
     private Vector3 targetPosition;
 
+    public GameObject TimerObject;
+
     [SerializeField]
     private float movementSpeed = 1f;
     private float distanceCheck = 0.001f;
@@ -28,6 +30,7 @@ public class Movement : MonoBehaviour
         // Base position is the middle of the pattern, from which the block moves.
         currentCycle = Pattern.GetRandomCycle();
         gameObject.GetComponent<BlockSpawner>().SetCurrentColor(currentCycle.Color);
+        TimerObject.GetComponent<TimerScript>().SetTime(currentCycle.GetTime());
     }
 
     void Update()
@@ -62,6 +65,7 @@ public class Movement : MonoBehaviour
 
 
         gameObject.GetComponent<BlockSpawner>().SetCurrentColor(currentCycle.Color);
+        TimerObject.GetComponent<TimerScript>().SetTime(currentCycle.GetTime());
     }
 
     private IEnumerator MoveY()

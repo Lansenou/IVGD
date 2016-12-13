@@ -29,7 +29,6 @@ namespace Assets.Scripts.Blocks
         public void Spawn()
         {
             currentTime = (currentTime + Time.deltaTime) * Info.Color.ColorSpeed % 1;
-
             //Set last spawned block for camera follow script
             SmoothFollow.NewLastBlock(nextBlock.transform);
             Transform particles = Instantiate(BuildParticles).transform;
