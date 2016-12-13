@@ -25,7 +25,7 @@ public class Movement : MonoBehaviour
     private void Start()
     {
         // 1 Higher than the base
-        transform.position = basePosition = Base.position + new Vector3(0, 2.5f);
+        transform.position = basePosition = Base.position + new Vector3(0, 2.75f);
 
         // Base position is the middle of the pattern, from which the block moves.
         currentCycle = Pattern.GetRandomCycle();
