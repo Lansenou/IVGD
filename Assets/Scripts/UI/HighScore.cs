@@ -72,7 +72,7 @@ public class HighScore : MonoBehaviour
             {
                 OnHighScoreUpdate.Invoke(highScore = currentScore);
                 PlayerPrefs.SetFloat("Highscore", highScore);
-                Debug.Log("Highscore" + highScore);
+               // Debug.Log("Highscore" + highScore);
                 prevScore = currentScore;
 
                 if (!Social.localUser.authenticated)

@@ -8,6 +8,8 @@ namespace Assets.Scripts.Utility
         public void RestartScene()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            TowerPhysics.lastBlock = null;
+            OnTap.towerFalling = false;
         }
 
         public void OpenLeaderboards()

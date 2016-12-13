@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Blocks;
@@ -23,7 +23,7 @@ public class TimerScript : MonoBehaviour
         timeLeft -= Time.deltaTime;
         timerText.color = GradientColor.Evaluate(1-timeLeft / totalTime);
 
-        if (timeLeft <= 0 && !FallManager.DidFall)
+        if (timeLeft <= 0 && !FallManager.DidFall && !OnTap.towerFalling)
         {            
             timeLeft = 1.00f;
             Spawner.GetComponent<Movement>().MoveUp();
