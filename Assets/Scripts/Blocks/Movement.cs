@@ -12,6 +12,7 @@ public class Movement : MonoBehaviour
     private Vector3 basePosition;
 
     private Cycle currentCycle;
+	private Cycle lastCylce;
     private Vector3 startPosition;
     private Vector3 targetPosition;
 
@@ -54,7 +55,15 @@ public class Movement : MonoBehaviour
 
     public void MoveUp() {
         StartCoroutine(MoveY());
+		if(currentCycle)
+			lastCylce = currentCycle;
+		
         currentCycle = Pattern.GetRandomCycle();
+		if (currentCycle) {
+			while (currentCycle == lastCylce) {
+				currentCycle = Pattern.GetRandomCycle ();
+			}
+		}
         basePosition.y += AddHeight;
 
         // Set next position
