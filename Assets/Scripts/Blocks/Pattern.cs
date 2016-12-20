@@ -4,6 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class Pattern
 {
+
     [SerializeField]
     private List<Cycle> CycleList = new List<Cycle>();
     private int index = 0;
