@@ -18,8 +18,17 @@ public class Movement : MonoBehaviour
     public GameObject TimerObject;
 
     [SerializeField]
-    private float movementSpeed = 1f;
+    private float startMovementSpeed = 1f;
+    [SerializeField]
+    private float targetMovementSpeed = 10f;
+
+    [SerializeField]
+    private float movementSpeedIncreaseStep = 0.01f;
+    private float movementSpeed = 0;
+
     private float distanceCheck = 0.001f;
+
+
 
     // Use this for initialization
     private void Start()
@@ -44,7 +53,7 @@ public class Movement : MonoBehaviour
     void MoveBlock()
     {
         targetPosition = basePosition + currentCycle.GetCurrentTarget().TargetPos;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, Mathf.Lerp(startMovementSpeed, targetMovementSpeed, movementSpeed) * Time.deltaTime);
 
         if (Vector3.Distance(targetPosition, transform.position) < distanceCheck)
         {
@@ -63,6 +72,7 @@ public class Movement : MonoBehaviour
         transform.position = newPosition;
         currentCycle.IncreaseIndex();
 
+        movementSpeed += movementSpeedIncreaseStep;
 
         gameObject.GetComponent<BlockSpawner>().SetCurrentColor(currentCycle.Color);
         TimerObject.GetComponent<TimerScript>().SetTime(currentCycle.GetTime());
