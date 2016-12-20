@@ -6,12 +6,12 @@ public class Pattern
 {
     [SerializeField]
     private List<Cycle> CycleList = new List<Cycle>();
+    private int index = 0;
 
     public Cycle GetRandomCycle()
 	{
-		int index = 0;
-		index = (index + Random.Range(0, CycleList.Count)) % CycleList.Count;
-		return CycleList [index];
+        index = (index + Random.Range(1, CycleList.Count)) % CycleList.Count;
+        return CycleList [index];
     }
 }
 
