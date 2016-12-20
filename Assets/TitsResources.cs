@@ -24,11 +24,14 @@
 
 public static class TitsResources
 {
-        public const string achievement_test5 = "CgkI9eSTnt4LEAIQBQ"; // <GPGSID>
-        public const string leaderboard_stack_score = "CgkI9eSTnt4LEAIQBg"; // <GPGSID>
+        public const string achievement_stacker = "CgkI9eSTnt4LEAIQAg"; // <GPGSID>
+        public const string achievement_the_car_guy = "CgkI9eSTnt4LEAIQBQ"; // <GPGSID>
+        public const string achievement_slacker = "CgkI9eSTnt4LEAIQBw"; // <GPGSID>
         public const string achievement_welcome_to_stack__destroy = "CgkI9eSTnt4LEAIQAQ"; // <GPGSID>
-        public const string achievement_test2 = "CgkI9eSTnt4LEAIQAg"; // <GPGSID>
-        public const string achievement_test3 = "CgkI9eSTnt4LEAIQAw"; // <GPGSID>
-        public const string achievement_test4 = "CgkI9eSTnt4LEAIQBA"; // <GPGSID>
+        public const string achievement_perfect_stacker = "CgkI9eSTnt4LEAIQCQ"; // <GPGSID>
+        public const string achievement_good_stacker = "CgkI9eSTnt4LEAIQCA"; // <GPGSID>
+        public const string achievement_destroyer = "CgkI9eSTnt4LEAIQAw"; // <GPGSID>
+        public const string leaderboard_stack_score = "CgkI9eSTnt4LEAIQBg"; // <GPGSID>
+
 }
 

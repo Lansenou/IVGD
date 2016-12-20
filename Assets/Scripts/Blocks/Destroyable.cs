@@ -101,6 +101,8 @@ public class Destroyable : MonoBehaviour
                 TrackBuilding ();
                 isDestroyed = true;
                 CreateExplosion();
+                SignIn.Instance.IncreaseDestroyedObjects(1);
+                SignIn.Instance.DestroyerAchievement(100f);
                 CameraShake.Instance().ScreenShake(.5f);
                 FallManager.BuildingHasExploded = true;
             }

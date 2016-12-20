@@ -42,6 +42,7 @@ public class Scoring : MonoBehaviour
 
         // Update text
         HighScore.instance.CurrentScore = score;
+        SignIn.Instance.StackerAchievement(100f);
     }
 
     private void Start()
@@ -142,11 +143,15 @@ public class Scoring : MonoBehaviour
                     multiplier += Perfect;
                     PopupController.CreateFloatingText("Perfect", blue);
                     AudioSystem.Instance.PlayStackSound(true);
+                    SignIn.Instance.IncreasePerfectStacks(1);
+                    SignIn.Instance.PerfectStackerAchievement(100f);
                     break;
                 case Block.Good:
                     multiplier += Good;
                     PopupController.CreateFloatingText("Good", green);
                     AudioSystem.Instance.PlayStackSound(true);
+                    SignIn.Instance.IncreaseGoodStacks(1);
+                    SignIn.Instance.GoodStackerAchievement(100f);
                     break;
                 case Block.Ok:
                     multiplier += Ok;
