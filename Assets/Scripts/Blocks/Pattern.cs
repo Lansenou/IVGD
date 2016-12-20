@@ -4,14 +4,13 @@ using UnityEngine;
 [System.Serializable]
 public class Pattern
 {
+
     [SerializeField]
     private List<Cycle> CycleList = new List<Cycle>();
 
     public Cycle GetRandomCycle()
 	{
-		int index = 0;
-		index = (index + Random.Range(0, CycleList.Count)) % CycleList.Count;
-		return CycleList [index];
+		return CycleList[Random.Range(0, CycleList.Count)].Reset();
     }
 }
 
