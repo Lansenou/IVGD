@@ -8,8 +8,10 @@ public class Pattern
     private List<Cycle> CycleList = new List<Cycle>();
 
     public Cycle GetRandomCycle()
-    {
-        return CycleList[Random.Range(0, CycleList.Count)].Reset();
+	{
+		int index = 0;
+		index = (index + Random.Range(0, CycleList.Count)) % CycleList.Count;
+		return CycleList [index];
     }
 }
 
