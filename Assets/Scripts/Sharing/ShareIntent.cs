@@ -5,7 +5,7 @@ using System.IO;
 public class ShareIntent : MonoBehaviour {
 
     private string shareText = "Beat my score of {0}!\n";
-    private string gameLink = "Download the game on the Play Store at: " + "\nhttps://play.google.com/store/apps/details?id=com.TITS.StackDestroy&pcampaignid=GPC_shareGame";
+    private string gameLink = "Download the game on the Play Store at: " + "\nhttps://play.google.com/store/apps/details?id=com.tits.stackdestroy&pcampaignid=GPC_shareGame";
     private string subject = "Stack and Destroy";
     private bool isProcessing = false;
 

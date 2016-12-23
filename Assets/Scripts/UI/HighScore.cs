@@ -27,7 +27,7 @@ public class HighScore : MonoBehaviour
     public UnityAction<float> OnHighScoreUpdate;
 
     [SerializeField]
-    Text scoreText;
+    Text scoreText, shareScore;
     [SerializeField]
     Text highscoreText;
 
@@ -35,7 +35,7 @@ public class HighScore : MonoBehaviour
     {
         instance = this;
         OnHighScoreUpdate += (float score) => { highscoreText.text = "Best " + score.ToString("0"); };
-        OnScoreUpdate += (float score) => { scoreText.text = score.ToString("0"); };
+        OnScoreUpdate += (float score) => { scoreText.text = shareScore.text = score.ToString("0"); };
         OnHighScoreUpdate.Invoke(highScore = PlayerPrefs.GetFloat("Highscore", 0));
     }
 
